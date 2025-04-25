@@ -1,0 +1,104 @@
+---
+title: "Python for Bioinformaticians: A Gentle Introduction"
+subtitle: "An R User's Guide to the Python Working Environment"
+format: 
+  html:
+    toc: true
+    toc-depth: 2
+    code-fold: true
+    code-overflow: wrap
+    theme: cosmo
+    smooth-scroll: true
+jupyter: python3
+---
+
+# Best practices in Python
+
+In this document, I will provide an introduction to working in Python - from setting up and environment to making packages. I will highlight the quirks of Python and also try to put my examples in the context of single-cell RNA-seq.
+
+
+## Setting up your environment.
+
+The first step
+
+::: {.columns}
+::: {.column width="50%"}
+
+### 🐍 `venv`
+```bash
+python3 -m venv env
+source env/bin/activate
+pip install pandas numpy
+```
+:::
+
+::: {.column width="50%"}
+### `conda`
+```bash
+conda create -n myenv python=3.10
+conda activate myenv
+conda install pandas numpy
+```
+::: 
+
+:::
+
+I prefer using venv and pip in general!
+
+Also, once youa re done with your project, if you want to save all your dependecies to run your project you simply run:
+```{bash}
+pip freeze > requirements.txt
+```
+
+## Object oriented language
+
+loops, functions, class
+
+## making your own package
+
+## reading in tables
+
+## basic numerical/matheramtic functions
+
+## statistics
+
+## plotting
+
+## vectorising and timing
+
+## parallelism
+
+
+## Snakemake
+
+
+## working with anndata
+
+## typehinting and testing
+
+## integrating rust/c++
+
+
+## 🧵 R vs Python: Limitations
+::: {.incremental}
+
+- R: Dependency hell, less general-purpose
+
+- Python: Verbose, steep learning curve for plots/stats
+
+- Use both! (Snakemake helps bridge them) 
+
+:::
+
+
+## Summary
+
+Python gives you:
+
+Strong workflows (Snakemake)
+
+Flexible data handling (pandas, AnnData)
+
+Access to new tooling (ML, web, devops)
+
+Let’s use both languages — smarter, not harder 😎
