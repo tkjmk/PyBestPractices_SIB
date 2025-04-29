@@ -1,82 +1,1030 @@
 ---
-title: "Python for Bioinformaticians: A Gentle Introduction"
-subtitle: "An R User's Guide to the Python Working Environment"
+title: "A Gentle Introduction to Working in Python"
+subtitle: "TDS-F Group Meeting"
 format: 
   html:
-    toc: true
-    toc-depth: 2
-    code-fold: true
+    code-fold: false
     code-overflow: wrap
-    theme: cosmo
+    theme: yeti
     smooth-scroll: true
 jupyter: python3
 ---
 
-# Best practices in Python
 
-In this document, I will provide an introduction to working in Python - from setting up and environment to making packages. I will highlight the quirks of Python and also try to put my examples in the context of single-cell RNA-seq.
+In this document, I will provide an introduction to working in Python - from setting up and environment to making packages. I will try to highlight the quirks of Python and the most useful packages! 
 
+## Setting up your environment
 
-## Setting up your environment.
+The first step is choosing between environment managers: `venv` and `conda`.
+These will help you work in a contained environment and will allow you to use package managers to download Python packages.
 
-The first step
-
-::: {.columns}
-::: {.column width="50%"}
-
-### 🐍 `venv`
-```bash
-python3 -m venv env
-source env/bin/activate
-pip install pandas numpy
+::: {.panel-tabset}
+### venv
+```{.bash}
+python3 -m venv sc_env # create environment
+source sc_env/bin/activate # enter environment
+pip install pandas numpy scanpy # installing packages
+```
+### conda
+```{.bash}
+conda create -n sc_env python=3.10 # create environment
+conda activate sc_env # enter environment
+conda install pandas numpy scanpy # installing packages
 ```
 :::
 
-::: {.column width="50%"}
-### `conda`
-```bash
-conda create -n myenv python=3.10
-conda activate myenv
-conda install pandas numpy
-```
-::: 
+Once your project is ready to share, you can simply document all the dependencies to run your project using:
 
-:::
-
-I prefer using venv and pip in general!
-
-Also, once youa re done with your project, if you want to save all your dependecies to run your project you simply run:
-```{bash}
+::: {.panel-tabset}
+### venv
+```{.bash}
 pip freeze > requirements.txt
 ```
+### conda
+```{.bash}
+conda env export > environment.yml
+```
+:::
 
-## Object oriented language
 
-loops, functions, class
+For me, I prefer using venv with pip - but many people like conda which was designed for data science and can do a bit more than just being a package installer and can even manage software stacks beyond Python. conda comes packaged with Anaconda or miniconda, which basically provide you with many of the packages required for scientific analyses.
+
+## Importing packages
+
+When writing your script there are a few ways to import packages into Python.\
+You can just import the package directly using `import package`, all functions will be available as `package.function()`.\
+You can provide a new name for the package by importing it as `import package as pkg`, and functions will be available as `pkg.function()`\
+You can also directly import a specific function from a package e.g. `import function from package`, and you can use it as `function()`.
+
+```{python}
+import sys
+import numpy as np # allows you to use numpy functions as np.function_name
+import pandas as pd
+import scanpy as sc
+from os import getcwd # importing a specific function from a package, can be used as getcwd() now.
+import timeit
+```
+
+## An object-oriented language
+Python is object-oriented: everything focuses around objects - everything pretty much is an object.\
+These objects have their own attributes (i.e. their characteristics) and methods (i.e. things they can do).\
+For example, for a string a method would be that you can lowercase the whole word e.g. "ACT1" to "act1" by `"ACT".lower()`.\
+An attribute a string has for example is its length for example "ACT1" has a length of 4 characters.\
+
+
+
+Two objects that are important for Python programming are functions and classes - which also exist in R. Below, I show how they are typically in formatted.
+
+```{python}
+# Function
+def scale_counts(expmat):
+    '''
+    These are called docstrings and are placed between three single quotes.
+    Here, you can put your guide on how to use a function.
+    It can be called by using help(scale_counts)
+
+    This function scales the expression matrix.
+
+    Parameters
+    ----------
+    expmat : np.ndarray
+        Expression matrix in cell x gene format with count data for expression.
+
+    Returns
+    -------
+    np.ndarray
+        Expression matrix standardised based on the matrix sum.
+    '''
+    return expmat / expmat.sum(axis=1, keepdims=True)
+
+# Class
+class Cell:
+    def __init__(self, id, expression, location):
+        '''
+        Parameters
+        ----------
+        id : str
+            Identifier for the cell.
+        expression : dict
+            Dictionary of {gene_name: expression_value}.
+        '''
+        self.id = id
+        self.expression = expression
+        self.location = location
+        
+    def get_expression(self, gene):
+        '''Return the expression level of a single gene.'''
+        return self.expression.get(gene, np.nan)  # returns np.nan if gene missing
+
+    def plot_expression(self, gene1, gene2):
+        '''Placeholder for a plotting function comparing two genes.'''
+        pass  # you can implement later
+
+    def remove_zero_expression(self, gene):
+        '''Placeholder for a function that removes genes with zero expression.'''
+        pass
+
+    def get_max_expressin(self, gene):
+        '''Placeholder for a function that tells you gene(s) with highest expression.'''
+        pass
+
+
+# Example usage
+cell1_exp = {'gene1': 2, 'gene2': 3, 'gene3': 0, 'gene4': 8}
+
+mycell = Cell('cell1', cell1_exp, 'brain')
+print(mycell.get_expression('gene2'))  # Should return 3
+print(mycell.location)  # Should return brain
+
+```
+
+You want to use classes when you need reusable, modular code - where you want to apply the same functions. This is what the scanpy authors did when building the AnnData object.
+
+In the above block, I demonstrate the use of docstrings - so that others and most importantly you, can remember what the function/class is.
 
 ## making your own package
+What is nice, is when you have a series of functions/classes you find yourself using a lot, you can easily package it and import it into other projects.
 
-## reading in tables
+Let's say I saved the above coding block in a file called "cellutils.py", I would be able to import it into my other scripts using:
 
-## basic numerical/matheramtic functions
+```{python}
+#| eval: true
+# if python cannot find your package put the following line above:
+#sys.path.insert(0, '/path/to/dir/where/your/script/is/')
+import cellutils as cu
+
+cu.scale_counts(np.array([[1, 2], [3, 4]]))
+
+```
+
+If you want to run your script as a command line tool, that is also possible and you can look into `argparse` to input arguments e.g.
+
+in the command line you could have something like:
+
+```{bash}
+
+python myscript.py -a file.txt -s 0.45 --method x2
+
+```
+
+The Python script would look something like:
+
+```{python}
+#| eval: false
+
+#!/usr/bin/env python3
+import argparse
+
+def main():
+    parser = argparse.ArgumentParser(description="Process a file with a given method and scale.")
+    parser.add_argument("-a", "--afile", type=str, required=True, help="Input file (e.g., file.txt)")
+    parser.add_argument("-s", "--scale", type=float, required=True, help="Scaling factor (e.g., 0.45)")
+    parser.add_argument("--method", type=str, choices=["x1", "x2", "log"], default="x1", help="Processing method")
+    
+    args = parser.parse_args()
+
+    print(f"File: {args.afile}")
+    print(f"Scale: {args.scale}")
+    print(f"Method: {args.method}")
+
+if __name__ == "__main__":
+    main()
+
+```
+
+## loops and comprehensions
+
+In Python the classic `for` and `while` loops exist to go through collection objects.
+
+Let's say we have a Python list with genes that are found expressed in a cell:
+
+```{python}
+expressed_genes = [
+    "Actb",
+    "Gapdh",
+    "Cd3e",
+    "Pax6",
+    "Foxp3",
+    "Tubb3",
+    "mt-Co1",   # mitochondrial
+    "mt-Nd2",   # mitochondrial
+    "mt-Cytb",  # mitochondrial
+    "Il2ra"
+]
+
+# if we want to get and print the first letter of each gene
+for gene in expressed_genes: # with this line we are iterating through each item in the list expressed_genes
+  print(gene[0]) # in the for loop we are printing the first letter of the string.
+
+```
+
+
+
+In python different types of objects have methods associated with them.
+In this example we have a list of strings - if we want to see what attributes and methods are available we use `dir(var)`
+```{python}
+dir("Actb")
+
+```
+
+If we want to see what these methods do, we can use the `help` function.
+
+```{python}
+
+help("Actb".startswith)
+
+
+```
+
+With this `startswith` method for strings, lets loop through the list of expressed genes and identify mitochondrial genes (then store them in a list).
+
+```{python}
+
+mtgenes = [] # initialising empty list
+for gene in expressed_genes:
+  if gene.startswith('mt-'):
+    mtgenes.append(gene)
+
+print(mtgenes)
+# to print a bit nicer
+print(", ".join(mtgenes))
+
+# to print even more clearly, we can use f strings
+print(f'Mitochondrial genes: {", ".join(mtgenes)}')
+print(f'There are {len(mtgenes)} mitochondrial genes in the dataset.')
+
+```
+
+### list comprehensions
+
+In general if you are iterating through a list, and the result of your loop is a list - you should use a **list comprehension**!
+The reason to do this is because they are more efficient and quicker to do the same analysis than a loop.
+
+In this block below, I demonstrate how we can convert the loops shown above into list comprehensions.
+
+```{python}
+
+firstletter_genes = [gene[0] for gene in expressed_genes] # what you want in final list, your iterator id, what you are iterating through
+
+mtgenes_lc = [gene for gene in expressed_genes if gene.startswith('mt')] # you can also add if statements in
+
+print(", ".join(firstletter_genes))
+print(", ".join(mtgenes_lc))
+```
+
+
+is it faster??
+
+```{python}
+#| code-fold: true
+#| code-summary: "Measuring the speed of list comprehensions with timeit:"
+
+setup_code = "expressed_genes = ['Actb','Gapdh', 'Cd3e', 'Pax6', 'Foxp3', 'Tubb3', 'mt-Co1', 'mt-Nd2', 'mt-Cytb', 'Il2ra']"
+
+loop_code = """
+mtgenes = [] # initialising empty list
+for gene in expressed_genes:
+  if gene.startswith('mt-'):
+    mtgenes.append(gene)
+"""
+
+list_comp_code = "[gene for gene in expressed_genes if gene.startswith('mt')]"
+
+
+# Timing both
+loop_time = timeit.timeit(loop_code, setup=setup_code, number=10000)
+list_comp_time = timeit.timeit(list_comp_code, setup=setup_code, number=10000)
+
+print(f"For loop time: {loop_time:.4f} secs")
+print(f"List comprehension time: {list_comp_time:.4f} secs")
+```
+
+The reason is list comprehensions essentially run the iterations at a faster level using the underhood of Python (C), whereas the loop is having to enter the list each time and append to an unknown sized list.
+
+
+```{python}
+#| code-fold: true
+#| code-summary: "A simple  way to measure the speed of your code:"
+
+import time
+
+t0 = time.time()
+# place code you want to run here!
+t1 = time.time()
+
+total = t1-t0 # this will store the time it takes for you to run that code
+
+```
+
+### Going beyond lists
+
+Beyond `lists`, other collection objects exist `sets`, `tuples` and `dictionaries`.
+
+```{python}
+# Lists are denoted by []   -> ordered, changeable, can hold duplicates
+genes = ["Actb", "Gapdh", "Cd3e"]
+# Tuples are denoted by ()  -> ordered, unchangeable, can hold duplicates - makes code faster
+genes = ("Actb", "Gapdh", "Cd3e")
+# Sets are denoted by {}    -> unordered, immutable (can add/remove items though), duplicates not allowed   
+genes = {"Actb", "Gapdh", "Cd3e"}
+
+# to look up the methods available to your data type you can use the dir(genes) or help(genes) function.
+
+# Dictionaries are kind of a named list also denoted by {}, but within the items will have keys.
+gene_expression = {
+    "Actb": 7.2,
+    "Gapdh": 8.1,
+    "Cd3e": 3.4
+}
+# these are good to store items e.g. you could have a list of genes epxressed in key cells
+genes_expressed = {
+    "Cell1": ['gene1', 'gene2'],
+    "Cell2": ['gene1', 'gene3', 'gene4'],
+    "Cell3": ['gene2', 'gene3']
+}
+
+# you can even have dictionaries of dictionaries!
+
+```
+
+In general, I use lists. I use sets occasionally, for example, to hold a list of genes that I need to filter out of  a dataset (I don't care about order here, don't want duplicates, and won't really be changing it).
+
+Dicitonaries I use relatively frequently, especially for storing data/metadata - and if you have a dictionary of lists, it is easy to convert it to a pandas dataframe.
+
+
+### Indexing and Slicing
+
+```{python}
+
+expressed_genes = ['Actb','Gapdh', 'Cd3e', 'Pax6', 'Foxp3', 'Tubb3', 'mt-Co1', 'mt-Nd2', 'mt-Cytb', 'Il2ra']
+
+print("first item of genes list:") #Python is 0-indexed!
+expressed_genes[0]
+
+print("items 1 to 3 of genes list:")
+expressed_genes[1:3]
+
+print("last item of genes list:")
+expressed_genes[-1]
+
+print("every second item in the genes list:")
+expressed_genes[::2]
+
+
+if 'Gapdh' in expressed_genes:
+    print('Gapdh is an expressed gene')
+
+print('Get length of a variable:')
+len(expressed_genes)
+
+# methods available for lists:
+expressed_genes.sort()
+
+expressed_genes.append('Lyve1') # genes.insert(0, 'Lyve1') if you want to insert it at the beginning
+
+expressed_genes.remove('Lyve1')
+
+
+```
+
+
+### Try Except 
+
+Sometimes you want to do an operation, but there is an expected error that might pop up - you might not want your program to exit but to catch that error and do something else - this can be achieved with `try except`. For example, if you have genes you always want to remove from a dataset of expressed genes - you might have a fixed list of genes to remove. However, in a future study, those genes may not be expressed and therefore not in the list of expressed genes -> trying to remove it will raise an error -> you can catch the error and do something else like printing a helpful message.
+
+```{python}
+
+genes2remove = ['Pins', 'Pard3']
+
+
+for gene in genes2remove:
+    try:
+        expressed_genes.remove(gene)
+    except ValueError:
+        print(f'{gene} not an expressed_gene, so cannot be removed')
+
+
+
+
+```
+
+
+
+## Reading in Tables
+
+```{python}
+#| code-fold: true
+#| code-summary: "Generating the tables:"
+#| eval: false
+import os
+
+np.random.seed(42)
+
+# generating a 10x10 table with 10 genes and 10 cells
+genes = [f"Gene{i}" for i in range(10)]
+cells = [f"Cell{i}" for i in range(10)]
+
+# random count matrix (integers between 50 and 500)
+count_matrix = np.random.randint(50, 500, size=(10, 10))
+df = pd.DataFrame(count_matrix, index=genes, columns=cells)
+
+
+df_KO = df.copy() # creating KO version: copying to modify
+# reducing expression for Gene3 and Gene7 in Cell0, Cell1, Cell2
+for gene in ["Gene3", "Gene7"]:
+    for cell in ["Cell0", "Cell1", "Cell2"]:
+        df_KO.loc[gene, cell] = df_KO.loc[gene, cell] // 10  # Strong reduction
+
+
+output_dir = '/Users/tkafle/Documents/PyBestPractices_SIB/data/' # ensuring output dir exists
+os.makedirs(output_dir, exist_ok=True)
+# saving the files
+df.to_csv(f"{output_dir}/WT_1.csv")
+random_changes = np.random.randint(-50, 51, size=df.shape)
+modified_df = df + random_changes
+modified_df = modified_df.where(df >= 0, 0)
+modified_df.to_csv(f"{output_dir}/WT_2.csv")
+df_KO.to_csv(f"{output_dir}/KO_1.csv")
+random_changes = np.random.randint(-50, 51, size=df_KO.shape)
+modified_df = df_KO + random_changes
+modified_df = modified_df.where(modified_df >= 0, 0)
+modified_df.to_csv(f"{output_dir}/KO_2.csv")
+
+```
+
+The most commonly used package to handle tables in Python is `pandas` oftened imported as `pd`.
+
+It is easy to read in a csv into pandas using:
+```{python}
+output_dir = '/Users/tkafle/Documents/PyBestPractices_SIB/data/'
+wt1_df = pd.read_csv(f"{output_dir}/WT_1.csv", index_col=0) # the table is of type: pd.DataFrame
+```
+
+
+You can then do classic things you might want to do attirbutes methods:
+
+```{python}
+
+# Attributes
+print("Shape of dataframe:")
+print(wt1_df.shape)    # (10, 10) — 10 genes x 10 cells
+
+print("Column names of dataframe:")
+print(wt1_df.columns)  # list of cell names (columns)
+
+# Methods
+print("\nTransposing dataframe:")
+print(wt1_df.transpose().head()) # flip genes and cells
+print("\nAdding a new column:")
+wt1_df['GeneSum'] = wt1_df.sum(axis=1) # add a new column: sum of counts per gene
+print(wt1_df.head())
+wt1_df.drop(['GeneSum'], axis=1, inplace=True) # removing the new column
+
+# Change data type (example: ensure all counts are integers)
+wt1_df = wt1_df.astype(int)
+
+# remember you can use dir(pd.DataFrame) and help()
+
+```
+
+In an AnnData object, a lot of the data is stored in pandas dataframes.
+
+## Basic numerical/mathematical functions
+
+You can perform basic mathematical functions in Python, not dissimilarly to R. Some advanced functions are in numpy (usually imported as np).
+```{python}
+
+# addition
+_ = 5 + 4
+
+# subtraction
+_ = 5 - 4
+
+# multiplication
+_ = 5 * 4
+
+# division
+_ =  5 / 2
+
+# squaring
+_ =  5 ** 2
+
+# getting remainder (modulo)
+_ =  5 % 2
+
+# Advanced functions in Python are largely found in packages such as numpy [np]
+
+# square root
+_ = np.sqrt(16)  # or math.sqrt(16)
+
+# natural logarithm (log base e)
+_ = np.log(10)  # or math.log(10)
+
+# logarithm base 10
+_ = np.log10(100)
+
+# exponentiation (e^x)
+_ = np.exp(4)
+
+# absolute value
+_ = np.abs(-5)
+
+# rounding numbers
+_ = np.round(3.567, 2)  # rounds to 2 decimal places
+
+
+
+# I will note here, when printing long floats, f strings are really useful for formatting them.
+
+num = 3.1415926535
+# round to 3 decimal places
+print(f"Pi rounded to 3 decimals: {num:.3f}") # f means 
+# round to 1 decimal place
+print(f"Pi rounded to 1 decimal: {num:.1f}")
+
+sml_num = 0.00123456
+# 3 significant figures in decimals
+print(f"{sml_num:.3g}") #g means general format
+big_num = 123456
+# 3 significant figures (scientific notication)
+print(f"{big_num:.3g}")
+
+```
+
+Remember when printing floats:
+ - `.3f` = 3 decimal places.
+ - `.3g` = 3 significant figures.
+
+
+## Plotting
+
+In general there are three popular libraries:
+- Matplotlib (basic, customizable)
+- Seaborn (easy, beautiful defaults)
+- Plotly (interactive)
+
+
+The dataset will be some generated data of KO vs WT counts, with 10 genes and 10 cells.
+
+```{python}
+#| code-fold: true
+#| cold-summary: "Reading in the dataset:"
+
+# load the datasets
+wt1 = pd.read_csv(f"{output_dir}/WT_1.csv", index_col=0)
+wt2 = pd.read_csv(f"{output_dir}/WT_2.csv", index_col=0)
+ko1 = pd.read_csv(f"{output_dir}/KO_1.csv", index_col=0)
+ko2 = pd.read_csv(f"{output_dir}/KO_2.csv", index_col=0)
+
+# stack into one DataFrame for easier plotting
+# adding group labels
+wt1['group'] = 'WT'
+wt2['group'] = 'WT'
+ko1['group'] = 'KO'
+ko2['group'] = 'KO'
+wt1['id'] = 'WT1'
+wt2['id'] = 'WT2'
+ko1['id'] = 'KO1'
+ko2['id'] = 'KO2'
+
+# Combine into one DataFrame
+df = pd.concat([wt1, wt2, ko1, ko2])
+
+print(df.head())
+```
+
+### matplotlib.pyplot (plt)
+
+Here, I will show how to make a plot and layer using matplotlib.pyplot (plt).
+The plot will be a histogram showing the expression of genes in Cell2 for sample 1.
+
+```{python}
+import matplotlib.pyplot as plt
+
+cell2_wt1_expression =  df[df.id == 'WT1']['Cell2']
+plt.figure(figsize=(6,4)) # initating figure size
+plt.hist(cell2_wt1_expression, bins=5, color='skyblue', edgecolor='black') # plotting the histogram
+plt.title('Distribution of Gene_1 Expression') # title of plot
+plt.xlabel('Expression') # x axis label
+plt.ylabel('Count') # y axis label
+plt.grid(True)  # layering on grid
+plt.axvline(cell2_wt1_expression.mean(), color='red', linestyle='dashed', linewidth=2, label='Mean')  # placing vertical line to show where the mean is
+plt.legend() # plot the legend
+plt.show() # show the plot
+
+
+```
+
+`plt.show` is what you need to do to show the plot in a popup window. If you want to save the figure there is `plt.savefig()`.\
+Other good practices are to close figures once they have been initiated using `plt.close()` or `plt.clf()`.
+
+import seaborn as sns
+
+### seaborn (sns)
+
+seaborn usually runs on long data, so we will need to melt the pandas dataframe from before.
+
+```{python}
+#| code-fold: true
+#| cold-summary: "Melting the dataset:"
+
+
+
+# melting each DF
+if 'gene' not in wt1.columns:
+    wt1.reset_index(inplace=True)
+    wt1.rename(columns={'index': 'gene'}, inplace=True)
+wt1_melted = wt1.melt(id_vars=['group', 'id', 'gene'], var_name='cell', value_name='expression')
+
+if 'gene' not in wt2.columns:
+    wt2.reset_index(inplace=True)
+    wt2.rename(columns={'index': 'gene'}, inplace=True)
+wt2_melted = wt2.melt(id_vars=['group', 'id', 'gene'], var_name='cell', value_name='expression')
+
+if 'gene' not in ko1.columns:
+    ko1.reset_index(inplace=True)
+    ko1.rename(columns={'index': 'gene'}, inplace=True)
+ko1_melted = ko1.melt(id_vars=['group', 'id', 'gene'], var_name='cell', value_name='expression')
+
+if 'gene' not in ko2.columns:
+    ko2.reset_index(inplace=True)
+    ko2.rename(columns={'index': 'gene'}, inplace=True)
+ko2_melted = ko2.melt(id_vars=['group', 'id', 'gene'], var_name='cell', value_name='expression')
+
+
+# Merge the DataFrames
+merged_df = pd.concat([wt1_melted, wt2_melted, ko1_melted, ko2_melted], ignore_index=True)
+#merged_df['gene'] = merged_df['gene'].apply(lambda x: 'Gene' + str(int(x)))
+
+print(merged_df.head())
+```
+
+```{python}
+#| layout-ncol: 2
+#| fig-cap: 
+#|   - "Violin plot: gene 1"
+#|   - "Violin plot gene 3"
+
+
+import seaborn as sns
+
+plt.figure(figsize=(6,4))
+sns.violinplot(x='group', y='expression', data=merged_df[merged_df.gene == 'Gene1'], palette='muted')
+plt.title('Gene1 Expression by Group')
+plt.show()
+
+plt.figure(figsize=(6,4))
+sns.violinplot(x='group', y='expression', data=merged_df[merged_df.gene == 'Gene3'], palette='muted')
+plt.title('Gene3 Expression by Group')
+plt.show()
+
+```
+
+```{python}
+#| layout-ncol: 2
+#| fig-cap: 
+#|   - "Violin plot: gene 2"
+#|   - "Violin plot gene 7"
+
+
+import seaborn as sns
+
+plt.figure(figsize=(6,4))
+sns.violinplot(x='group', y='expression', data=merged_df[merged_df.gene == 'Gene2'], palette='muted')
+plt.title('Gene1 Expression by Group')
+plt.show()
+
+plt.figure(figsize=(6,4))
+sns.violinplot(x='group', y='expression', data=merged_df[merged_df.gene == 'Gene7'], palette='muted')
+plt.title('Gene3 Expression by Group')
+plt.show()
+
+```
+
+
+
+```{python}
+# Fake fold change and p-value data (for illustration)
+import numpy as np
+
+# Create fake log2 fold change and p-value data
+volcano_data = pd.DataFrame({
+    'gene': ['Gene0', 'Gene1', 'Gene2', 'Gene3', 'Gene4', 'Gene5', 'Gene6', 'Gene7', 'Gene8', 'Gene9'],
+    'log2FC': np.random.randn(10),  # Random fold changes
+    'pval': np.random.rand(10)  # Random p-values
+})
+
+# Calculate -log10(p-value)
+volcano_data['-log10(pval)'] = -np.log10(volcano_data['pval'])
+
+plt.figure(figsize=(6,5))
+sns.scatterplot(data=volcano_data, x='log2FC', y='-log10(pval)', color='purple')
+plt.axhline(y=1.3, color='red', linestyle='dashed')  # Threshold line for p-value = 0.05
+plt.axvline(x=0, color='black', linestyle='dotted')
+plt.title('Volcano Plot (Mock Example)')
+plt.xlabel('Log2 Fold Change')
+plt.ylabel('-Log10(p-value)')
+plt.show()
+
+
+```
+
+
+# plotly
+Interactivity
+
+```{python}
+
+import plotly.express as px
+
+# Plotly: Strip Plot (interactive)
+fig = px.strip(merged_df[merged_df.gene == 'Gene3'], x='group', y='expression', color='cell', stripmode='overlay', title='Gene Expression by Cell (WT vs KO)')
+fig.show()
+
+
+```
+
+
+
+
+
+
+types of pltos i want to show, histogram, lineplot, barplot, violin plot, volcano plot, stripplot.
+when showing matplotlib i want to show how we can layer things. they will be all related to singlecell data and tumours
+
+
+
 
 ## statistics
+R is known for its statistical properties, but the stats module from scipy brings alot of that functionality over.
 
-## plotting
+example glm, example ttest, example chisq test (maybe from the small 100 row table just imported above)
 
-## vectorising and timing
+
+
+```{python}
+import statsmodels.api as sm
+
+# Assuming df is already created
+# Create a binary response for KO vs WT group
+merged_df['group_binary'] = merged_df['group'].apply(lambda x: 1 if x == 'KO' else 0)
+
+# Let's use Gene expression as a continuous response
+X = pd.get_dummies(merged_df['group'], drop_first=True)  # One-hot encoding for group variable
+X = sm.add_constant(X)  # Add intercept
+y = merged_df['expression']
+
+# Fit GLM
+model = sm.GLM(y, X, family=sm.families.Gaussian()).fit()
+
+# Show the results
+print(model.summary())
+
+
+
+```
+
+
+
+```{python}
+from scipy import stats
+
+# Assume 'df' has two conditions: 'KO' and 'WT'
+ko_expr = merged_df[merged_df['group'] == 'KO']['expression']
+wt_expr = merged_df[merged_df['group'] == 'WT']['expression']
+
+# Perform two-sample t-test
+t_stat, p_value = stats.ttest_ind(ko_expr, wt_expr)
+
+print(f"T-statistic: {t_stat}, P-value: {p_value}")
+
+
+```
+
+```{python}
+
+
+# Categorize gene expression into 'high' or 'low' based on median expression
+median_expr = merged_df['expression'].median()
+merged_df['expr_category'] = merged_df['expression'].apply(lambda x: 'high' if x > median_expr else 'low')
+
+# Create a contingency table
+contingency = pd.crosstab(merged_df['expr_category'], merged_df['group'])
+
+# Perform the Chi-Squared test
+chi2, p_val, dof, expected = stats.chi2_contingency(contingency)
+
+print(f"Chi-Squared: {chi2}, P-value: {p_val}")
+
+
+```
+
+
+```{python}
+
+# Perform ANOVA on expression values grouped by the 'group' column
+group1 = merged_df[merged_df['group'] == 'WT']['expression']
+group2 = merged_df[merged_df['group'] == 'KO']['expression']
+
+f_stat, p_val = stats.f_oneway(group1, group2)
+print(f"ANOVA F-statistic: {f_stat}, P-value: {p_val}")
+
+
+```
+
+
+```{python}
+
+import pandas as pd
+import scipy.stats as stats
+from statsmodels.stats.multitest import multipletests
+
+# Example of a dataframe 'df' with gene expression data (assuming you already have this)
+# We assume `group` is the column that has 'KO' and 'WT' labels and expression data per gene
+
+# Create a list to store p-values
+p_values = []
+#g='Gene0'
+
+
+# Iterate over each gene (rows of the dataframe)
+for g in merged_df.gene.unique():
+    # Get expression data for the gene in both KO and WT groups
+    ko_expr = merged_df[(merged_df.gene == g) & (merged_df.group == 'KO')]['expression'].to_numpy()
+    wt_expr = merged_df[(merged_df.gene == g) & (merged_df.group == 'WT')]['expression'].to_numpy()
+
+    # Perform two-sample t-test
+    t_stat, p_val = stats.ttest_ind(ko_expr, wt_expr, equal_var=False)
+    p_values.append(p_val)
+
+# Now apply multiple testing correction to the p-values
+# Here we use the Benjamini-Hochberg (FDR) method, you could use Bonferroni if you prefer
+reject, corrected_pvals, _, _ = multipletests(p_values, alpha=0.05, method='fdr_bh')
+
+# Create a dataframe to view the results
+results = pd.DataFrame({
+    'gene': merged_df.gene.unique(),
+    'p-value': p_values,
+    'corrected p-value': corrected_pvals,
+    'reject null hypothesis': reject
+})
+
+print(results)
+
+
+
+
+```
+
+
 
 ## parallelism
 
+```{python}
+import time
+import multiprocessing
+
+# Function to calculate square of a number (CPU-bound task)
+def calculate_square(number):
+    return number * number
+
+# Function to run the calculation in parallel using multiple processes
+def parallel_square(numbers):
+    # Create a pool of worker processes
+    with multiprocessing.Pool(processes=multiprocessing.cpu_count()) as pool:
+        result = pool.map(calculate_square, numbers)
+    return result
+
+# Single-threaded version: Calculating squares sequentially
+def single_threaded_square(numbers):
+    result = []
+    for number in numbers:
+        result.append(calculate_square(number))
+    return result
+
+if __name__ == "__main__":
+    # Create a list of numbers
+    numbers = [x for x in range(1, 10000001)]  # 10 million numbers
+    
+    # Measure time for single-threaded execution
+    start_time = time.time()
+    single_result = single_threaded_square(numbers)
+    single_thread_time = time.time() - start_time
+    print(f"Single-threaded time: {single_thread_time:.2f} seconds")
+    
+    # Measure time for parallel execution
+    start_time = time.time()
+    parallel_result = parallel_square(numbers)
+    parallel_time = time.time() - start_time
+    print(f"Parallel execution time: {parallel_time:.2f} seconds")
+    
+    # Compare results to make sure they are the same
+    print(f"Do the results match? {'Yes' if single_result == parallel_result else 'No'}")
+
+
+
+
+```
 
 ## Snakemake
 
+show basic snakemake document with three rules: cellranger [bash], preprocessing [python], plotting [r]
+
+```{Snakefile}
+
+# Snakefile
+
+# Define the rule for Cell Ranger processing
+rule cellranger:
+    input:
+        r1="data/{sample}_R1.fastq.gz",
+        r2="data/{sample}_R2.fastq.gz"
+    output:
+        "output/cellranger_output/{sample}/filtered_feature_bc_matrix"
+    shell:
+        "cellranger count --id={wildcards.sample} "
+        "--fastqs={input.r1},{input.r2} "
+        "--transcriptome=/path/to/refdata-cellranger-mm10-3.0.0 "
+        "--sample={wildcards.sample}"
+
+# Define the rule for Python data processing
+rule process_data:
+    input:
+        "output/cellranger_output/{sample}/filtered_feature_bc_matrix/matrix.mtx"
+    output:
+        "output/analysis_results/{sample}_processed.csv"
+    script:
+        "scripts/process_data.py"
+
+# Define the rule for generating plots using R
+rule plot_data:
+    input:
+        "output/analysis_results/{sample}_processed.csv"
+    output:
+        "output/analysis_results/{sample}_plot.png"
+    script:
+        "scripts/plot_data.R"
+
+
+
+```
+
+run workflow with `snakemake --cores 4`
 
 ## working with anndata
 
+I will talk more about this when showing my re-do of the analyses.
+
 ## typehinting and testing
 
-## integrating rust/c++
+```{python}
+def normalize(x: np.ndarray) -> np.ndarray:
+    return x / x.sum()
+
+```
+
+Example unit testing
+```{python}
+#| eval: false
+
+import unittest
+import numpy as np
+
+# Assuming normalize function is defined here
+
+class TestNormalizeFunction(unittest.TestCase):
+
+    def test_normalize_single_dimension(self):
+        """Test normalization of a 1D array."""
+        x = np.array([1, 2, 3])
+        expected = np.array([0.16666667, 0.33333333, 0.5])  # sum = 6, so divide each element by 6
+        result = normalize(x)
+        np.testing.assert_array_almost_equal(result, expected, decimal=8)
+    
+    def test_normalize_multiple_dimension(self):
+        """Test normalization of a 2D array."""
+        x = np.array([[1, 2], [3, 4]])
+        expected = np.array([[0.1, 0.2], [0.3, 0.4]])  # sum = 10, divide each element by 10
+        result = normalize(x)
+        np.testing.assert_array_almost_equal(result, expected, decimal=8)
+
+    def test_normalize_edge_case(self):
+        """Test normalization of an edge case (empty array)."""
+        x = np.array([])
+        with self.assertRaises(ValueError):  # Expecting a ValueError if sum is 0
+            normalize(x)
+
+if __name__ == "__main__":
+    unittest.main()
+    
+```
+
+
+
+## how do I test all my code interactively?
+**iPython**
+
+iPython allows you to interactively - few poitns on why its useful.
 
 
 ## 🧵 R vs Python: Limitations
