@@ -158,7 +158,7 @@ require(['plotly'], function(Plotly) {
 You can just import the package directly using <code>import package</code>, all functions will be available as <code>package.function()</code>.<br>
 You can provide a new name for the package by importing it as <code>import package as pkg</code>, and functions will be available as <code>pkg.function()</code><br>
 You can also directly import a specific function from a package e.g.&nbsp;<code>import function from package</code>, and you can use it as <code>function()</code>.</p>
-<div id="23b9391f" class="cell" data-execution_count="1">
+<div id="c810643a" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np <span class="co"># allows you to use numpy functions as np.function_name</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -175,7 +175,7 @@ For example, for a string a method would be that you can lowercase the whole wor
 An attribute a string has for example is its length for example “ACT1” has a length of 4 characters.<br>
 </p>
 <p>Two objects that are important for Python programming are functions and classes - which also exist in R. Below, I show how they are typically in formatted.</p>
-<div id="0c922b82" class="cell" data-execution_count="2">
+<div id="79abe15c" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Function</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> scale_counts(expmat):</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">'''</span></span>
@@ -247,13 +247,13 @@ brain</code></pre>
 <h2 class="anchored" data-anchor-id="making-your-own-package">making your own package</h2>
 <p>What is nice, is when you have a series of functions/classes you find yourself using a lot, you can easily package it and import it into other projects.</p>
 <p>Let’s say I saved the above coding block in a file called “cellutils.py”, I would be able to import it into my other scripts using:</p>
-<div id="3ca008d1" class="cell" data-execution_count="3">
+<div id="10872f07" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># if python cannot find your package put the following line above:</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co">#sys.path.insert(0, '/path/to/dir/where/your/script/is/')</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> cellutils <span class="im">as</span> cu</span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>cu.scale_counts(np.array([[<span class="dv">1</span>, <span class="dv">2</span>], [<span class="dv">3</span>, <span class="dv">4</span>]]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="33">
+<div class="cell-output cell-output-display" data-execution_count="3">
 <pre><code>array([[0.33333333, 0.66666667],
        [0.42857143, 0.57142857]])</code></pre>
 </div>
@@ -264,7 +264,7 @@ brain</code></pre>
 python myscript.py -a file.txt -s 0.45 --method x2
 </code></pre>
 <p>The Python script would look something like:</p>
-<div id="7c6e1d67" class="cell" data-execution_count="4">
+<div id="91d119a8" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env python3</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> argparse</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -288,7 +288,7 @@ python myscript.py -a file.txt -s 0.45 --method x2
 <h2 class="anchored" data-anchor-id="loops-and-comprehensions">loops and comprehensions</h2>
 <p>In Python the classic <code>for</code> and <code>while</code> loops exist to go through collection objects.</p>
 <p>Let’s say we have a Python list with genes that are found expressed in a cell:</p>
-<div id="06c62ed6" class="cell" data-execution_count="5">
+<div id="23550713" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>expressed_genes <span class="op">=</span> [</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Actb"</span>,</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Gapdh"</span>,</span>
@@ -319,9 +319,9 @@ I</code></pre>
 </div>
 </div>
 <p>In python different types of objects have methods associated with them. In this example we have a list of strings - if we want to see what attributes and methods are available we use <code>dir(var)</code></p>
-<div id="6f4cbde8" class="cell" data-execution_count="6">
+<div id="740efbaa" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="bu">dir</span>(<span class="st">"Actb"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="35">
+<div class="cell-output cell-output-display" data-execution_count="5">
 <pre><code>['__add__',
  '__class__',
  '__contains__',
@@ -403,7 +403,7 @@ I</code></pre>
 </div>
 </div>
 <p>If we want to see what these methods do, we can use the <code>help</code> function.</p>
-<div id="0e66ea20" class="cell" data-execution_count="7">
+<div id="a7b89d96" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="bu">help</span>(<span class="st">"Actb"</span>.startswith)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Help on built-in function startswith:
@@ -419,7 +419,7 @@ startswith(...) method of builtins.str instance
 </div>
 </div>
 <p>With this <code>startswith</code> method for strings, lets loop through the list of expressed genes and identify mitochondrial genes (then store them in a list).</p>
-<div id="abd27747" class="cell" data-execution_count="8">
+<div id="ab655968" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>mtgenes <span class="op">=</span> [] <span class="co"># initialising empty list</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> gene <span class="kw">in</span> expressed_genes:</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> gene.startswith(<span class="st">'mt-'</span>):</span>
@@ -443,7 +443,7 @@ There are 3 mitochondrial genes in the dataset.</code></pre>
 <h3 class="anchored" data-anchor-id="list-comprehensions">list comprehensions</h3>
 <p>In general if you are iterating through a list, and the result of your loop is a list - you should use a <strong>list comprehension</strong>! The reason to do this is because they are more efficient and quicker to do the same analysis than a loop.</p>
 <p>In this block below, I demonstrate how we can convert the loops shown above into list comprehensions.</p>
-<div id="f329dcdb" class="cell" data-execution_count="9">
+<div id="8da2147b" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>firstletter_genes <span class="op">=</span> [gene[<span class="dv">0</span>] <span class="cf">for</span> gene <span class="kw">in</span> expressed_genes] <span class="co"># what you want in final list, your iterator id, what you are iterating through</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>mtgenes_lc <span class="op">=</span> [gene <span class="cf">for</span> gene <span class="kw">in</span> expressed_genes <span class="cf">if</span> gene.startswith(<span class="st">'mt'</span>)] <span class="co"># you can also add if statements in</span></span>
@@ -456,7 +456,7 @@ mt-Co1, mt-Nd2, mt-Cytb</code></pre>
 </div>
 </div>
 <p>is it faster??</p>
-<div id="1409daf5" class="cell" data-execution_count="10">
+<div id="50ebbb41" class="cell" data-execution_count="10">
 <details class="code-fold">
 <summary>Measuring the speed of list comprehensions with timeit:</summary>
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>setup_code <span class="op">=</span> <span class="st">"expressed_genes = ['Actb','Gapdh', 'Cd3e', 'Pax6', 'Foxp3', 'Tubb3', 'mt-Co1', 'mt-Nd2', 'mt-Cytb', 'Il2ra']"</span></span>
@@ -479,12 +479,12 @@ mt-Co1, mt-Nd2, mt-Cytb</code></pre>
 <span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"List comprehension time: </span><span class="sc">{</span>list_comp_time<span class="sc">:.4f}</span><span class="ss"> secs"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>For loop time: 0.0141 secs
-List comprehension time: 0.0156 secs</code></pre>
+<pre><code>For loop time: 0.0144 secs
+List comprehension time: 0.0139 secs</code></pre>
 </div>
 </div>
 <p>The reason is list comprehensions essentially run the iterations at a faster level using the underhood of Python (C), whereas the loop is having to enter the list each time and append to an unknown sized list.</p>
-<div id="044cedea" class="cell" data-execution_count="11">
+<div id="29aeea1a" class="cell" data-execution_count="11">
 <details class="code-fold">
 <summary>A simple way to measure the speed of your code:</summary>
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
@@ -500,7 +500,7 @@ List comprehension time: 0.0156 secs</code></pre>
 <section id="going-beyond-lists" class="level3">
 <h3 class="anchored" data-anchor-id="going-beyond-lists">Going beyond lists</h3>
 <p>Beyond <code>lists</code>, other collection objects exist <code>sets</code>, <code>tuples</code> and <code>dictionaries</code>.</p>
-<div id="dce9bf2f" class="cell" data-execution_count="12">
+<div id="42e6ed49" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Lists are denoted by []   -&gt; ordered, changeable, can hold duplicates</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>genes <span class="op">=</span> [<span class="st">"Actb"</span>, <span class="st">"Gapdh"</span>, <span class="st">"Cd3e"</span>]</span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Tuples are denoted by ()  -&gt; ordered, unchangeable, can hold duplicates - makes code faster</span></span>
@@ -530,7 +530,7 @@ List comprehension time: 0.0156 secs</code></pre>
 </section>
 <section id="indexing-and-slicing" class="level3">
 <h3 class="anchored" data-anchor-id="indexing-and-slicing">Indexing and Slicing</h3>
-<div id="ebafeb27" class="cell" data-execution_count="13">
+<div id="1711736c" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>expressed_genes <span class="op">=</span> [<span class="st">'Actb'</span>,<span class="st">'Gapdh'</span>, <span class="st">'Cd3e'</span>, <span class="st">'Pax6'</span>, <span class="st">'Foxp3'</span>, <span class="st">'Tubb3'</span>, <span class="st">'mt-Co1'</span>, <span class="st">'mt-Nd2'</span>, <span class="st">'mt-Cytb'</span>, <span class="st">'Il2ra'</span>]</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"first item of genes list:"</span>) <span class="co">#Python is 0-indexed!</span></span>
@@ -582,7 +582,7 @@ Get length of a variable:</code></pre>
 <section id="try-except" class="level3">
 <h3 class="anchored" data-anchor-id="try-except">Try Except</h3>
 <p>Sometimes you want to do an operation, but there is an expected error that might pop up - you might not want your program to exit but to catch that error and do something else - this can be achieved with <code>try except</code>./ For example, if you have genes you always want to remove from a dataset of expressed genes - you might have a fixed list of genes to remove. However, in a future study, those genes may not be expressed and therefore not in the list of expressed genes -&gt; trying to remove it will raise an error -&gt; you can catch the error and do something else like printing a helpful message.</p>
-<div id="c6e5d116" class="cell" data-execution_count="14">
+<div id="f8617fa9" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>genes2remove <span class="op">=</span> [<span class="st">'Pins'</span>, <span class="st">'Pard3'</span>]</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -600,7 +600,7 @@ Pard3 not an expressed_gene, so cannot be removed</code></pre>
 </section>
 <section id="reading-in-tables" class="level2">
 <h2 class="anchored" data-anchor-id="reading-in-tables">Reading in Tables</h2>
-<div id="6ed68d6a" class="cell" data-execution_count="15">
+<div id="3fb450e5" class="cell" data-execution_count="15">
 <details class="code-fold">
 <summary>Generating the tables:</summary>
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
@@ -640,12 +640,12 @@ Pard3 not an expressed_gene, so cannot be removed</code></pre>
 </div>
 <p>The most commonly used package to handle tables in Python is <code>pandas</code> oftened imported as <code>pd</code>.</p>
 <p>It is easy to read in a csv into pandas using:</p>
-<div id="e0c173de" class="cell" data-execution_count="16">
+<div id="da060ea7" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>output_dir <span class="op">=</span> <span class="st">'/Users/tkafle/Documents/PyBestPractices_SIB/data/'</span></span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>wt1_df <span class="op">=</span> pd.read_csv(<span class="ss">f"</span><span class="sc">{</span>output_dir<span class="sc">}</span><span class="ss">/WT_1.csv"</span>, index_col<span class="op">=</span><span class="dv">0</span>) <span class="co"># the table is of type: pd.DataFrame</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>You can then do classic things you might want to do attirbutes methods:</p>
-<div id="2263dca4" class="cell" data-execution_count="17">
+<div id="9209bb4f" class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Attributes</span></span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Shape of dataframe:"</span>)</span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(wt1_df.shape)    <span class="co"># (10, 10) — 10 genes x 10 cells</span></span>
@@ -697,7 +697,7 @@ Gene3     2273
 Gene4     3029  </code></pre>
 </div>
 </div>
-<div id="02c6e3c1" class="cell" data-execution_count="18">
+<div id="742c9ddd" class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># acessing the expression of a speficific gene in a specific cell</span></span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>wt1_df.loc[<span class="st">'Gene0'</span>, <span class="st">'Cell1'</span>] <span class="co"># row name, column name</span></span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -725,7 +725,7 @@ Gene4     3029  </code></pre>
 <section id="basic-numericalmathematical-functions" class="level2">
 <h2 class="anchored" data-anchor-id="basic-numericalmathematical-functions">Basic numerical/mathematical functions</h2>
 <p>You can perform basic mathematical functions in Python, not dissimilarly to R. Some advanced functions are in numpy (usually imported as np).</p>
-<div id="6f05cfca" class="cell" data-execution_count="19">
+<div id="38514045" class="cell" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># addition</span></span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> <span class="dv">5</span> <span class="op">+</span> <span class="dv">4</span></span>
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -793,7 +793,7 @@ Pi rounded to 1 decimal: 3.1
 <h2 class="anchored" data-anchor-id="plotting">Plotting</h2>
 <p>In general there are three popular libraries: - Matplotlib (basic, customizable) - Seaborn (easy, beautiful defaults) - Plotly (interactive)</p>
 <p>The dataset will be some generated data of KO vs WT counts, with 10 genes and 10 cells.</p>
-<div id="ece73f1a" class="cell" data-execution_count="20">
+<div id="58f1f3ef" class="cell" data-execution_count="20">
 <details class="code-fold">
 <summary>Reading in the dataset:</summary>
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load the datasets</span></span>
@@ -837,7 +837,7 @@ Gene4    WT  WT1  </code></pre>
 <section id="matplotlib.pyplot-plt" class="level3">
 <h3 class="anchored" data-anchor-id="matplotlib.pyplot-plt">matplotlib.pyplot (plt)</h3>
 <p>Here, I will show how to make a plot and layer using matplotlib.pyplot (plt). The plot will be a histogram showing the expression of genes in Cell2 for sample 1.</p>
-<div id="0044242b" class="cell" data-execution_count="21">
+<div id="b1f6a8c5" class="cell" data-execution_count="21">
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>cell2_wt1_expression <span class="op">=</span>  df[df.<span class="bu">id</span> <span class="op">==</span> <span class="st">'WT1'</span>][<span class="st">'Cell2'</span>]</span>
@@ -853,7 +853,7 @@ Gene4    WT  WT1  </code></pre>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="PythonIntro_SIB_files/figure-html/cell-22-output-1.png" width="515" height="370" class="figure-img"></p>
+<p><img src="PythonIntro_SIB_files/figure-html/cell-22-output-1.png" width="385" height="277" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -864,7 +864,7 @@ Other good practices are to close figures once they have been initiated using <c
 <section id="seaborn-sns" class="level3">
 <h3 class="anchored" data-anchor-id="seaborn-sns">seaborn (sns)</h3>
 <p>seaborn usually runs on long data, so we will need to melt the pandas dataframe from before.</p>
-<div id="fac8b7f5" class="cell" data-execution_count="22">
+<div id="0ca25e87" class="cell" data-execution_count="22">
 <details class="code-fold">
 <summary>Melting the dataset:</summary>
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># melting each DF</span></span>
@@ -915,12 +915,12 @@ Other good practices are to close figures once they have been initiated using <c
 <span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>sns.violinplot(x<span class="op">=</span><span class="st">'group'</span>, y<span class="op">=</span><span class="st">'expression'</span>, data<span class="op">=</span>merged_df[merged_df.gene <span class="op">==</span> <span class="st">'Gene3'</span>], palette<span class="op">=</span><span class="st">'muted'</span>)</span>
 <span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Gene3 Expression by Group'</span>)</span>
 <span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="d0f0c558" class="cell quarto-layout-panel" data-layout-ncol="2" data-execution_count="23">
+<div id="1b87b420" class="cell quarto-layout-panel" data-execution_count="23" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="PythonIntro_SIB_files/figure-html/cell-24-output-1.png" width="519" height="370" class="figure-img"></p>
+<p><img src="PythonIntro_SIB_files/figure-html/cell-24-output-1.png" width="388" height="277" class="figure-img"></p>
 <figcaption>Violin plot: gene 1</figcaption>
 </figure>
 </div>
@@ -928,7 +928,7 @@ Other good practices are to close figures once they have been initiated using <c
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="PythonIntro_SIB_files/figure-html/cell-24-output-2.png" width="530" height="370" class="figure-img"></p>
+<p><img src="PythonIntro_SIB_files/figure-html/cell-24-output-2.png" width="397" height="277" class="figure-img"></p>
 <figcaption>Violin plot gene 3</figcaption>
 </figure>
 </div>
@@ -949,12 +949,12 @@ Other good practices are to close figures once they have been initiated using <c
 <span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a>sns.swarmplot(data<span class="op">=</span>merged_df[merged_df.gene <span class="op">==</span> <span class="st">'Gene7'</span>], x<span class="op">=</span><span class="st">"group"</span>, y<span class="op">=</span><span class="st">"expression"</span>, size<span class="op">=</span><span class="dv">3</span>, ax<span class="op">=</span>g.ax)</span>
 <span id="cb43-13"><a href="#cb43-13" aria-hidden="true" tabindex="-1"></a>g.ax.set_title(<span class="st">'Gene7 Expression by Group'</span>)</span>
 <span id="cb43-14"><a href="#cb43-14" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="e850b45e" class="cell quarto-layout-panel" data-layout-ncol="2" data-execution_count="24">
+<div id="2757098a" class="cell quarto-layout-panel" data-execution_count="24" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="PythonIntro_SIB_files/figure-html/cell-25-output-1.png" width="566" height="394" class="figure-img"></p>
+<p><img src="PythonIntro_SIB_files/figure-html/cell-25-output-1.png" width="424" height="295" class="figure-img"></p>
 <figcaption>Violin plot: gene 2</figcaption>
 </figure>
 </div>
@@ -962,14 +962,14 @@ Other good practices are to close figures once they have been initiated using <c
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="PythonIntro_SIB_files/figure-html/cell-25-output-2.png" width="566" height="394" class="figure-img"></p>
+<p><img src="PythonIntro_SIB_files/figure-html/cell-25-output-2.png" width="424" height="295" class="figure-img"></p>
 <figcaption>Violin plot gene 7</figcaption>
 </figure>
 </div>
 </div>
 </div>
 </div>
-<div id="52524df1" class="cell" data-execution_count="25">
+<div id="9fbb506c" class="cell" data-execution_count="25">
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># creating fake log2 fold change and p-value data</span></span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>volcano_data <span class="op">=</span> pd.DataFrame({</span>
 <span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">#'gene': ['Gene0', 'Gene1', 'Gene2', 'Gene3', 'Gene4', 'Gene5', 'Gene6', 'Gene7', 'Gene8', 'Gene9'],</span></span>
@@ -991,7 +991,7 @@ Other good practices are to close figures once they have been initiated using <c
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="PythonIntro_SIB_files/figure-html/cell-26-output-1.png" width="502" height="442" class="figure-img"></p>
+<p><img src="PythonIntro_SIB_files/figure-html/cell-26-output-1.png" width="387" height="331" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -1001,16 +1001,16 @@ Other good practices are to close figures once they have been initiated using <c
 <section id="plotly" class="level1">
 <h1>plotly</h1>
 <p>Interactivity</p>
-<div id="a96777b5" class="cell" data-execution_count="26">
+<div id="ba848e2f" class="cell" data-execution_count="26">
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.express <span class="im">as</span> px</span>
 <span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotly: Strip Plot (interactive)</span></span>
 <span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> px.strip(merged_df[merged_df.gene <span class="op">==</span> <span class="st">'Gene3'</span>], x<span class="op">=</span><span class="st">'group'</span>, y<span class="op">=</span><span class="st">'expression'</span>, color<span class="op">=</span><span class="st">'cell'</span>, stripmode<span class="op">=</span><span class="st">'overlay'</span>, title<span class="op">=</span><span class="st">'Gene Expression by Cell (WT vs KO)'</span>)</span>
 <span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<div>                            <div id="47717692-b40b-49b5-9e5b-2b7e6baf98be" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("47717692-b40b-49b5-9e5b-2b7e6baf98be")) {                    Plotly.newPlot(                        "47717692-b40b-49b5-9e5b-2b7e6baf98be",                        [{"alignmentgroup": "True", "boxpoints": "all", "fillcolor": "rgba(255,255,255,0)", "hoveron": "points", "hovertemplate": "cell=Cell0<br>group=%{x}<br>expression=%{y}<extra></extra>", "legendgroup": "Cell0", "line": {"color": "rgba(255,255,255,0)"}, "marker": {"color": "#636efa"}, "name": "Cell0", "offsetgroup": "Cell0", "orientation": "v", "pointpos": 0, "showlegend": true, "type": "box", "x": ["WT", "WT", "KO", "KO"], "x0": " ", "xaxis": "x", "y": [71, 100, 7, 1], "y0": " ", "yaxis": "y"}, {"alignmentgroup": "True", "boxpoints": "all", "fillcolor": "rgba(255,255,255,0)", "hoveron": "points", "hovertemplate": "cell=Cell1<br>group=%{x}<br>expression=%{y}<extra></extra>", "legendgroup": "Cell1", "line": {"color": "rgba(255,255,255,0)"}, "marker": {"color": "#EF553B"}, "name": "Cell1", "offsetgroup": "Cell1", "orientation": "v", "pointpos": 0, "showlegend": true, "type": "box", "x": ["WT", "WT", "KO", "KO"], "x0": " ", "xaxis": "x", "y": [302, 312, 30, 0], "y0": " ", "yaxis": "y"}, {"alignmentgroup": "True", "boxpoints": "all", "fillcolor": "rgba(255,255,255,0)", "hoveron": "points", "hovertemplate": "cell=Cell2<br>group=%{x}<br>expression=%{y}<extra></extra>", "legendgroup": "Cell2", "line": {"color": "rgba(255,255,255,0)"}, "marker": {"color": "#00cc96"}, "name": "Cell2", "offsetgroup": "Cell2", "orientation": "v", "pointpos": 0, "showlegend": true, "type": "box", "x": ["WT", "WT", "KO", "KO"], "x0": " ", "xaxis": "x", "y": [285, 275, 28, 42], "y0": " ", "yaxis": "y"}, {"alignmentgroup": "True", "boxpoints": "all", "fillcolor": "rgba(255,255,255,0)", "hoveron": "points", "hovertemplate": "cell=Cell3<br>group=%{x}<br>expression=%{y}<extra></extra>", "legendgroup": "Cell3", "line": {"color": "rgba(255,255,255,0)"}, "marker": {"color": "#ab63fa"}, "name": "Cell3", "offsetgroup": "Cell3", "orientation": "v", "pointpos": 0, "showlegend": true, "type": "box", "x": ["WT", "WT", "KO", "KO"], "x0": " ", "xaxis": "x", "y": [394, 443, 394, 351], "y0": " ", "yaxis": "y"}, {"alignmentgroup": "True", "boxpoints": "all", "fillcolor": "rgba(255,255,255,0)", "hoveron": "points", "hovertemplate": "cell=Cell4<br>group=%{x}<br>expression=%{y}<extra></extra>", "legendgroup": "Cell4", "line": {"color": "rgba(255,255,255,0)"}, "marker": {"color": "#FFA15A"}, "name": "Cell4", "offsetgroup": "Cell4", "orientation": "v", "pointpos": 0, "showlegend": true, "type": "box", "x": ["WT", "WT", "KO", "KO"], "x0": " ", "xaxis": "x", "y": [98, 80, 98, 63], "y0": " ", "yaxis": "y"}, {"alignmentgroup": "True", "boxpoints": "all", "fillcolor": "rgba(255,255,255,0)", "hoveron": "points", "hovertemplate": "cell=Cell5<br>group=%{x}<br>expression=%{y}<extra></extra>", "legendgroup": "Cell5", "line": {"color": "rgba(255,255,255,0)"}, "marker": {"color": "#19d3f3"}, "name": "Cell5", "offsetgroup": "Cell5", "orientation": "v", "pointpos": 0, "showlegend": true, "type": "box", "x": ["WT", "WT", "KO", "KO"], "x0": " ", "xaxis": "x", "y": [108, 125, 108, 71], "y0": " ", "yaxis": "y"}, {"alignmentgroup": "True", "boxpoints": "all", "fillcolor": "rgba(255,255,255,0)", "hoveron": "points", "hovertemplate": "cell=Cell6<br>group=%{x}<br>expression=%{y}<extra></extra>", "legendgroup": "Cell6", "line": {"color": "rgba(255,255,255,0)"}, "marker": {"color": "#FF6692"}, "name": "Cell6", "offsetgroup": "Cell6", "orientation": "v", "pointpos": 0, "showlegend": true, "type": "box", "x": ["WT", "WT", "KO", "KO"], "x0": " ", "xaxis": "x", "y": [219, 201, 219, 244], "y0": " ", "yaxis": "y"}, {"alignmentgroup": "True", "boxpoints": "all", "fillcolor": "rgba(255,255,255,0)", "hoveron": "points", "hovertemplate": "cell=Cell7<br>group=%{x}<br>expression=%{y}<extra></extra>", "legendgroup": "Cell7", "line": {"color": "rgba(255,255,255,0)"}, "marker": {"color": "#B6E880"}, "name": "Cell7", "offsetgroup": "Cell7", "orientation": "v", "pointpos": 0, "showlegend": true, "type": "box", "x": ["WT", "WT", "KO", "KO"], "x0": " ", "xaxis": "x", "y": [237, 200, 237, 273], "y0": " ", "yaxis": "y"}, {"alignmentgroup": "True", "boxpoints": "all", "fillcolor": "rgba(255,255,255,0)", "hoveron": "points", "hovertemplate": "cell=Cell8<br>group=%{x}<br>expression=%{y}<extra></extra>", "legendgroup": "Cell8", "line": {"color": "rgba(255,255,255,0)"}, "marker": {"color": "#FF97FF"}, "name": "Cell8", "offsetgroup": "Cell8", "orientation": "v", "pointpos": 0, "showlegend": true, "type": "box", "x": ["WT", "WT", "KO", "KO"], "x0": " ", "xaxis": "x", "y": [320, 290, 320, 284], "y0": " ", "yaxis": "y"}, {"alignmentgroup": "True", "boxpoints": "all", "fillcolor": "rgba(255,255,255,0)", "hoveron": "points", "hovertemplate": "cell=Cell9<br>group=%{x}<br>expression=%{y}<extra></extra>", "legendgroup": "Cell9", "line": {"color": "rgba(255,255,255,0)"}, "marker": {"color": "#FECB52"}, "name": "Cell9", "offsetgroup": "Cell9", "orientation": "v", "pointpos": 0, "showlegend": true, "type": "box", "x": ["WT", "WT", "KO", "KO"], "x0": " ", "xaxis": "x", "y": [239, 236, 239, 280], "y0": " ", "yaxis": "y"}],                        {"boxmode": "overlay", "legend": {"title": {"text": "cell"}, "tracegroupgap": 0}, "template": {"data": {"bar": [{"error_x": {"color": "#2a3f5f"}, "error_y": {"color": "#2a3f5f"}, "marker": {"line": {"color": "#E5ECF6", "width": 0.5}}, "type": "bar"}], "barpolar": [{"marker": {"line": {"color": "#E5ECF6", "width": 0.5}}, "type": "barpolar"}], "carpet": [{"aaxis": {"endlinecolor": "#2a3f5f", "gridcolor": "white", "linecolor": "white", "minorgridcolor": "white", "startlinecolor": "#2a3f5f"}, "baxis": {"endlinecolor": "#2a3f5f", "gridcolor": "white", "linecolor": "white", "minorgridcolor": "white", "startlinecolor": "#2a3f5f"}, "type": "carpet"}], "choropleth": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "type": "choropleth"}], "contour": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "contour"}], "contourcarpet": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "type": "contourcarpet"}], "heatmap": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "heatmap"}], "heatmapgl": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "heatmapgl"}], "histogram": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "histogram"}], "histogram2d": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "histogram2d"}], "histogram2dcontour": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "histogram2dcontour"}], "mesh3d": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "type": "mesh3d"}], "parcoords": [{"line": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "parcoords"}], "pie": [{"automargin": true, "type": "pie"}], "scatter": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatter"}], "scatter3d": [{"line": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatter3d"}], "scattercarpet": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scattercarpet"}], "scattergeo": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scattergeo"}], "scattergl": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scattergl"}], "scattermapbox": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scattermapbox"}], "scatterpolar": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatterpolar"}], "scatterpolargl": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatterpolargl"}], "scatterternary": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatterternary"}], "surface": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "surface"}], "table": [{"cells": {"fill": {"color": "#EBF0F8"}, "line": {"color": "white"}}, "header": {"fill": {"color": "#C8D4E3"}, "line": {"color": "white"}}, "type": "table"}]}, "layout": {"annotationdefaults": {"arrowcolor": "#2a3f5f", "arrowhead": 0, "arrowwidth": 1}, "coloraxis": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "colorscale": {"diverging": [[0, "#8e0152"], [0.1, "#c51b7d"], [0.2, "#de77ae"], [0.3, "#f1b6da"], [0.4, "#fde0ef"], [0.5, "#f7f7f7"], [0.6, "#e6f5d0"], [0.7, "#b8e186"], [0.8, "#7fbc41"], [0.9, "#4d9221"], [1, "#276419"]], "sequential": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "sequentialminus": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]]}, "colorway": ["#636efa", "#EF553B", "#00cc96", "#ab63fa", "#FFA15A", "#19d3f3", "#FF6692", "#B6E880", "#FF97FF", "#FECB52"], "font": {"color": "#2a3f5f"}, "geo": {"bgcolor": "white", "lakecolor": "white", "landcolor": "#E5ECF6", "showlakes": true, "showland": true, "subunitcolor": "white"}, "hoverlabel": {"align": "left"}, "hovermode": "closest", "mapbox": {"style": "light"}, "margin": {"b": 0, "l": 0, "r": 0, "t": 30}, "paper_bgcolor": "white", "plot_bgcolor": "#E5ECF6", "polar": {"angularaxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}, "bgcolor": "#E5ECF6", "radialaxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}}, "scene": {"xaxis": {"backgroundcolor": "#E5ECF6", "gridcolor": "white", "gridwidth": 2, "linecolor": "white", "showbackground": true, "ticks": "", "zerolinecolor": "white"}, "yaxis": {"backgroundcolor": "#E5ECF6", "gridcolor": "white", "gridwidth": 2, "linecolor": "white", "showbackground": true, "ticks": "", "zerolinecolor": "white"}, "zaxis": {"backgroundcolor": "#E5ECF6", "gridcolor": "white", "gridwidth": 2, "linecolor": "white", "showbackground": true, "ticks": "", "zerolinecolor": "white"}}, "shapedefaults": {"line": {"color": "#2a3f5f"}}, "ternary": {"aaxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}, "baxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}, "bgcolor": "#E5ECF6", "caxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}}, "title": {"x": 0.05}, "xaxis": {"automargin": true, "gridcolor": "white", "linecolor": "white", "ticks": "", "title": {"standoff": 15}, "zerolinecolor": "white", "zerolinewidth": 2}, "yaxis": {"automargin": true, "gridcolor": "white", "linecolor": "white", "ticks": "", "title": {"standoff": 15}, "zerolinecolor": "white", "zerolinewidth": 2}}}, "title": {"text": "Gene Expression by Cell (WT vs KO)"}, "xaxis": {"anchor": "y", "domain": [0.0, 1.0], "title": {"text": "group"}}, "yaxis": {"anchor": "x", "domain": [0.0, 1.0], "title": {"text": "expression"}}},                        {"responsive": true}                    ).then(function(){
+<div>                            <div id="fad2db00-9ba4-42c4-9ab0-09a0a0363c6c" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("fad2db00-9ba4-42c4-9ab0-09a0a0363c6c")) {                    Plotly.newPlot(                        "fad2db00-9ba4-42c4-9ab0-09a0a0363c6c",                        [{"alignmentgroup": "True", "boxpoints": "all", "fillcolor": "rgba(255,255,255,0)", "hoveron": "points", "hovertemplate": "cell=Cell0<br>group=%{x}<br>expression=%{y}<extra></extra>", "legendgroup": "Cell0", "line": {"color": "rgba(255,255,255,0)"}, "marker": {"color": "#636efa"}, "name": "Cell0", "offsetgroup": "Cell0", "orientation": "v", "pointpos": 0, "showlegend": true, "type": "box", "x": ["WT", "WT", "KO", "KO"], "x0": " ", "xaxis": "x", "y": [71, 100, 7, 1], "y0": " ", "yaxis": "y"}, {"alignmentgroup": "True", "boxpoints": "all", "fillcolor": "rgba(255,255,255,0)", "hoveron": "points", "hovertemplate": "cell=Cell1<br>group=%{x}<br>expression=%{y}<extra></extra>", "legendgroup": "Cell1", "line": {"color": "rgba(255,255,255,0)"}, "marker": {"color": "#EF553B"}, "name": "Cell1", "offsetgroup": "Cell1", "orientation": "v", "pointpos": 0, "showlegend": true, "type": "box", "x": ["WT", "WT", "KO", "KO"], "x0": " ", "xaxis": "x", "y": [302, 312, 30, 0], "y0": " ", "yaxis": "y"}, {"alignmentgroup": "True", "boxpoints": "all", "fillcolor": "rgba(255,255,255,0)", "hoveron": "points", "hovertemplate": "cell=Cell2<br>group=%{x}<br>expression=%{y}<extra></extra>", "legendgroup": "Cell2", "line": {"color": "rgba(255,255,255,0)"}, "marker": {"color": "#00cc96"}, "name": "Cell2", "offsetgroup": "Cell2", "orientation": "v", "pointpos": 0, "showlegend": true, "type": "box", "x": ["WT", "WT", "KO", "KO"], "x0": " ", "xaxis": "x", "y": [285, 275, 28, 42], "y0": " ", "yaxis": "y"}, {"alignmentgroup": "True", "boxpoints": "all", "fillcolor": "rgba(255,255,255,0)", "hoveron": "points", "hovertemplate": "cell=Cell3<br>group=%{x}<br>expression=%{y}<extra></extra>", "legendgroup": "Cell3", "line": {"color": "rgba(255,255,255,0)"}, "marker": {"color": "#ab63fa"}, "name": "Cell3", "offsetgroup": "Cell3", "orientation": "v", "pointpos": 0, "showlegend": true, "type": "box", "x": ["WT", "WT", "KO", "KO"], "x0": " ", "xaxis": "x", "y": [394, 443, 394, 351], "y0": " ", "yaxis": "y"}, {"alignmentgroup": "True", "boxpoints": "all", "fillcolor": "rgba(255,255,255,0)", "hoveron": "points", "hovertemplate": "cell=Cell4<br>group=%{x}<br>expression=%{y}<extra></extra>", "legendgroup": "Cell4", "line": {"color": "rgba(255,255,255,0)"}, "marker": {"color": "#FFA15A"}, "name": "Cell4", "offsetgroup": "Cell4", "orientation": "v", "pointpos": 0, "showlegend": true, "type": "box", "x": ["WT", "WT", "KO", "KO"], "x0": " ", "xaxis": "x", "y": [98, 80, 98, 63], "y0": " ", "yaxis": "y"}, {"alignmentgroup": "True", "boxpoints": "all", "fillcolor": "rgba(255,255,255,0)", "hoveron": "points", "hovertemplate": "cell=Cell5<br>group=%{x}<br>expression=%{y}<extra></extra>", "legendgroup": "Cell5", "line": {"color": "rgba(255,255,255,0)"}, "marker": {"color": "#19d3f3"}, "name": "Cell5", "offsetgroup": "Cell5", "orientation": "v", "pointpos": 0, "showlegend": true, "type": "box", "x": ["WT", "WT", "KO", "KO"], "x0": " ", "xaxis": "x", "y": [108, 125, 108, 71], "y0": " ", "yaxis": "y"}, {"alignmentgroup": "True", "boxpoints": "all", "fillcolor": "rgba(255,255,255,0)", "hoveron": "points", "hovertemplate": "cell=Cell6<br>group=%{x}<br>expression=%{y}<extra></extra>", "legendgroup": "Cell6", "line": {"color": "rgba(255,255,255,0)"}, "marker": {"color": "#FF6692"}, "name": "Cell6", "offsetgroup": "Cell6", "orientation": "v", "pointpos": 0, "showlegend": true, "type": "box", "x": ["WT", "WT", "KO", "KO"], "x0": " ", "xaxis": "x", "y": [219, 201, 219, 244], "y0": " ", "yaxis": "y"}, {"alignmentgroup": "True", "boxpoints": "all", "fillcolor": "rgba(255,255,255,0)", "hoveron": "points", "hovertemplate": "cell=Cell7<br>group=%{x}<br>expression=%{y}<extra></extra>", "legendgroup": "Cell7", "line": {"color": "rgba(255,255,255,0)"}, "marker": {"color": "#B6E880"}, "name": "Cell7", "offsetgroup": "Cell7", "orientation": "v", "pointpos": 0, "showlegend": true, "type": "box", "x": ["WT", "WT", "KO", "KO"], "x0": " ", "xaxis": "x", "y": [237, 200, 237, 273], "y0": " ", "yaxis": "y"}, {"alignmentgroup": "True", "boxpoints": "all", "fillcolor": "rgba(255,255,255,0)", "hoveron": "points", "hovertemplate": "cell=Cell8<br>group=%{x}<br>expression=%{y}<extra></extra>", "legendgroup": "Cell8", "line": {"color": "rgba(255,255,255,0)"}, "marker": {"color": "#FF97FF"}, "name": "Cell8", "offsetgroup": "Cell8", "orientation": "v", "pointpos": 0, "showlegend": true, "type": "box", "x": ["WT", "WT", "KO", "KO"], "x0": " ", "xaxis": "x", "y": [320, 290, 320, 284], "y0": " ", "yaxis": "y"}, {"alignmentgroup": "True", "boxpoints": "all", "fillcolor": "rgba(255,255,255,0)", "hoveron": "points", "hovertemplate": "cell=Cell9<br>group=%{x}<br>expression=%{y}<extra></extra>", "legendgroup": "Cell9", "line": {"color": "rgba(255,255,255,0)"}, "marker": {"color": "#FECB52"}, "name": "Cell9", "offsetgroup": "Cell9", "orientation": "v", "pointpos": 0, "showlegend": true, "type": "box", "x": ["WT", "WT", "KO", "KO"], "x0": " ", "xaxis": "x", "y": [239, 236, 239, 280], "y0": " ", "yaxis": "y"}],                        {"boxmode": "overlay", "legend": {"title": {"text": "cell"}, "tracegroupgap": 0}, "template": {"data": {"bar": [{"error_x": {"color": "#2a3f5f"}, "error_y": {"color": "#2a3f5f"}, "marker": {"line": {"color": "#E5ECF6", "width": 0.5}}, "type": "bar"}], "barpolar": [{"marker": {"line": {"color": "#E5ECF6", "width": 0.5}}, "type": "barpolar"}], "carpet": [{"aaxis": {"endlinecolor": "#2a3f5f", "gridcolor": "white", "linecolor": "white", "minorgridcolor": "white", "startlinecolor": "#2a3f5f"}, "baxis": {"endlinecolor": "#2a3f5f", "gridcolor": "white", "linecolor": "white", "minorgridcolor": "white", "startlinecolor": "#2a3f5f"}, "type": "carpet"}], "choropleth": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "type": "choropleth"}], "contour": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "contour"}], "contourcarpet": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "type": "contourcarpet"}], "heatmap": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "heatmap"}], "heatmapgl": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "heatmapgl"}], "histogram": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "histogram"}], "histogram2d": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "histogram2d"}], "histogram2dcontour": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "histogram2dcontour"}], "mesh3d": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "type": "mesh3d"}], "parcoords": [{"line": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "parcoords"}], "pie": [{"automargin": true, "type": "pie"}], "scatter": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatter"}], "scatter3d": [{"line": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatter3d"}], "scattercarpet": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scattercarpet"}], "scattergeo": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scattergeo"}], "scattergl": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scattergl"}], "scattermapbox": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scattermapbox"}], "scatterpolar": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatterpolar"}], "scatterpolargl": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatterpolargl"}], "scatterternary": [{"marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "type": "scatterternary"}], "surface": [{"colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "type": "surface"}], "table": [{"cells": {"fill": {"color": "#EBF0F8"}, "line": {"color": "white"}}, "header": {"fill": {"color": "#C8D4E3"}, "line": {"color": "white"}}, "type": "table"}]}, "layout": {"annotationdefaults": {"arrowcolor": "#2a3f5f", "arrowhead": 0, "arrowwidth": 1}, "coloraxis": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "colorscale": {"diverging": [[0, "#8e0152"], [0.1, "#c51b7d"], [0.2, "#de77ae"], [0.3, "#f1b6da"], [0.4, "#fde0ef"], [0.5, "#f7f7f7"], [0.6, "#e6f5d0"], [0.7, "#b8e186"], [0.8, "#7fbc41"], [0.9, "#4d9221"], [1, "#276419"]], "sequential": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "sequentialminus": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]]}, "colorway": ["#636efa", "#EF553B", "#00cc96", "#ab63fa", "#FFA15A", "#19d3f3", "#FF6692", "#B6E880", "#FF97FF", "#FECB52"], "font": {"color": "#2a3f5f"}, "geo": {"bgcolor": "white", "lakecolor": "white", "landcolor": "#E5ECF6", "showlakes": true, "showland": true, "subunitcolor": "white"}, "hoverlabel": {"align": "left"}, "hovermode": "closest", "mapbox": {"style": "light"}, "margin": {"b": 0, "l": 0, "r": 0, "t": 30}, "paper_bgcolor": "white", "plot_bgcolor": "#E5ECF6", "polar": {"angularaxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}, "bgcolor": "#E5ECF6", "radialaxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}}, "scene": {"xaxis": {"backgroundcolor": "#E5ECF6", "gridcolor": "white", "gridwidth": 2, "linecolor": "white", "showbackground": true, "ticks": "", "zerolinecolor": "white"}, "yaxis": {"backgroundcolor": "#E5ECF6", "gridcolor": "white", "gridwidth": 2, "linecolor": "white", "showbackground": true, "ticks": "", "zerolinecolor": "white"}, "zaxis": {"backgroundcolor": "#E5ECF6", "gridcolor": "white", "gridwidth": 2, "linecolor": "white", "showbackground": true, "ticks": "", "zerolinecolor": "white"}}, "shapedefaults": {"line": {"color": "#2a3f5f"}}, "ternary": {"aaxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}, "baxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}, "bgcolor": "#E5ECF6", "caxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}}, "title": {"x": 0.05}, "xaxis": {"automargin": true, "gridcolor": "white", "linecolor": "white", "ticks": "", "title": {"standoff": 15}, "zerolinecolor": "white", "zerolinewidth": 2}, "yaxis": {"automargin": true, "gridcolor": "white", "linecolor": "white", "ticks": "", "title": {"standoff": 15}, "zerolinecolor": "white", "zerolinewidth": 2}}}, "title": {"text": "Gene Expression by Cell (WT vs KO)"}, "xaxis": {"anchor": "y", "domain": [0.0, 1.0], "title": {"text": "group"}}, "yaxis": {"anchor": "x", "domain": [0.0, 1.0], "title": {"text": "expression"}}},                        {"responsive": true}                    ).then(function(){
                             
-var gd = document.getElementById('47717692-b40b-49b5-9e5b-2b7e6baf98be');
+var gd = document.getElementById('fad2db00-9ba4-42c4-9ab0-09a0a0363c6c');
 var x = new MutationObserver(function (mutations, observer) {{
         var display = window.getComputedStyle(gd).display;
         if (!display || display === 'none') {{
@@ -1040,7 +1040,7 @@ if (outputEl) {{
 <h2 class="anchored" data-anchor-id="statistics">statistics</h2>
 <p>R is known for its statistical properties, but the stats module from scipy brings alot of that functionality over.</p>
 <p>example glm, example ttest, example chisq test (maybe from the small 100 row table just imported above)</p>
-<div id="16bf2e64" class="cell" data-execution_count="27">
+<div id="f0af213a" class="cell" data-execution_count="27">
 <div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
 <span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1065,7 +1065,7 @@ Model Family:                Gaussian   Df Model:                            1
 Link Function:               identity   Scale:                          17963.
 Method:                          IRLS   Log-Likelihood:                -2525.8
 Date:                Tue, 29 Apr 2025   Deviance:                   7.1492e+06
-Time:                        12:16:13   Pearson chi2:                 7.15e+06
+Time:                        14:40:25   Pearson chi2:                 7.15e+06
 No. Iterations:                     3   Pseudo R-squ. (CS):           0.002870
 Covariance Type:            nonrobust                                         
 ==============================================================================
@@ -1076,7 +1076,7 @@ WT            14.3400     13.403      1.070      0.285     -11.928      40.608
 ==============================================================================</code></pre>
 </div>
 </div>
-<div id="3371b226" class="cell" data-execution_count="28">
+<div id="f6489149" class="cell" data-execution_count="28">
 <div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> stats</span>
 <span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="co"># two conditions WT vs KO, different in expression</span></span>
@@ -1091,7 +1091,7 @@ WT            14.3400     13.403      1.070      0.285     -11.928      40.608
 <pre><code>T-statistic: -1.069947991397797, P-value: 0.2852911632028579</code></pre>
 </div>
 </div>
-<div id="7216e6b2" class="cell" data-execution_count="29">
+<div id="22f15b01" class="cell" data-execution_count="29">
 <div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># categorising gene expression into 'high' or 'low' based on median expression</span></span>
 <span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>median_expr <span class="op">=</span> merged_df[<span class="st">'expression'</span>].median()</span>
 <span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>merged_df[<span class="st">'expr_category'</span>] <span class="op">=</span> merged_df[<span class="st">'expression'</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: <span class="st">'high'</span> <span class="cf">if</span> x <span class="op">&gt;</span> median_expr <span class="cf">else</span> <span class="st">'low'</span>)</span>
@@ -1107,7 +1107,7 @@ WT            14.3400     13.403      1.070      0.285     -11.928      40.608
 <pre><code>Chi-Squared: 0.4900490049004901, P-value: 0.4839054452991407</code></pre>
 </div>
 </div>
-<div id="36c1ddd0" class="cell" data-execution_count="30">
+<div id="2cd84b94" class="cell" data-execution_count="30">
 <div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># performing ANOVA on expression values grouped by the 'group' column</span></span>
 <span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>group1 <span class="op">=</span> merged_df[merged_df[<span class="st">'group'</span>] <span class="op">==</span> <span class="st">'WT'</span>][<span class="st">'expression'</span>]</span>
 <span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>group2 <span class="op">=</span> merged_df[merged_df[<span class="st">'group'</span>] <span class="op">==</span> <span class="st">'KO'</span>][<span class="st">'expression'</span>]</span>
@@ -1119,7 +1119,7 @@ WT            14.3400     13.403      1.070      0.285     -11.928      40.608
 </div>
 </div>
 <p>Running multiple test correction</p>
-<div id="dc482514" class="cell" data-execution_count="31">
+<div id="2a81a2f4" class="cell" data-execution_count="31">
 <div class="sourceCode cell-code" id="cb54"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scipy.stats <span class="im">as</span> stats</span>
 <span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.stats.multitest <span class="im">import</span> multipletests</span>
@@ -1167,7 +1167,7 @@ WT            14.3400     13.403      1.070      0.285     -11.928      40.608
 </section>
 <section id="parallelism" class="level2">
 <h2 class="anchored" data-anchor-id="parallelism">parallelism</h2>
-<div id="ce7636fb" class="cell" data-execution_count="32">
+<div id="7a636fff" class="cell" data-execution_count="32">
 <div class="sourceCode cell-code" id="cb56"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
 <span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> multiprocessing</span>
 <span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1215,8 +1215,8 @@ WT            14.3400     13.403      1.070      0.285     -11.928      40.608
 <span id="cb56-45"><a href="#cb56-45" aria-hidden="true" tabindex="-1"></a>    <span class="co"># comparing results to make sure they are the same</span></span>
 <span id="cb56-46"><a href="#cb56-46" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Do the results match? </span><span class="sc">{</span><span class="st">'Yes'</span> <span class="cf">if</span> single_result <span class="op">==</span> parallel_result <span class="cf">else</span> <span class="st">'No'</span><span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Single-threaded time: 1.05 seconds
-Parallel execution time: 1.76 seconds
+<pre><code>Single-threaded time: 1.18 seconds
+Parallel execution time: 2.06 seconds
 Do the results match? Yes</code></pre>
 </div>
 </div>
@@ -1258,7 +1258,6 @@ rule plot_data:
     script:
         "scripts/plot_data.R"
 
-
 </code></pre>
 <p>run workflow with <code>snakemake --cores 4</code></p>
 </section>
@@ -1268,13 +1267,13 @@ rule plot_data:
 </section>
 <section id="typehinting-and-testing" class="level2">
 <h2 class="anchored" data-anchor-id="typehinting-and-testing">typehinting and testing</h2>
-<div id="6a07bf78" class="cell" data-execution_count="33">
+<div id="3ff1e2b0" class="cell" data-execution_count="33">
 <div class="sourceCode cell-code" id="cb59"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> normalize(x: np.ndarray) <span class="op">-&gt;</span> np.ndarray:</span>
 <span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> x <span class="op">/</span> x.<span class="bu">sum</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Other common types: <code>int</code>, <code>float</code>, <code>list</code>, <code>tuple</code>, <code>range</code>, <code>str</code>, <code>set</code>, <code>dict</code>, <code>bool</code>, <code>NoneType</code>, <code>pd.Series</code>, <code>pd.DataFrame</code>, <code>np.ndarray</code>, <code>np.int64</code>, <code>np.float64</code>, <code>sc.AnnData</code>.</p>
 <p>Example unit testing</p>
-<div id="043676cd" class="cell" data-execution_count="34">
+<div id="28cdf564" class="cell" data-execution_count="34">
 <div class="sourceCode cell-code" id="cb60"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> unittest</span>
 <span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1309,12 +1308,12 @@ rule plot_data:
 <p><strong>iPython</strong></p>
 <p>iPython allows you to interactively code, so you can test your code in your terminal.</p>
 </section>
-<section id="r-vs-python-limitations" class="level2">
-<h2 class="anchored" data-anchor-id="r-vs-python-limitations">🧵 R vs Python: Limitations</h2>
+<section id="r-python" class="level2">
+<h2 class="anchored" data-anchor-id="r-python">🧵 R &amp; Python</h2>
 <div class="incremental">
 <ul class="incremental">
-<li><p>R: you can do a lot of the vectorisation programming in R using numpy and pandas</p></li>
-<li><p>Python: Verbose, steeper learning curve for plots/stats</p></li>
+<li><p>you can do a lot of the vectorisation programming in R using numpy and pandas</p></li>
+<li><p>Python will have a bit of a learning curve for plots/stats - some R only packages (especially scientific) may not be available.</p></li>
 <li><p>Use both! (Snakemake helps bridge them)</p></li>
 </ul>
 </div>
