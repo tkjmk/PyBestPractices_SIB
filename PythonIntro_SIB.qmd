@@ -347,9 +347,10 @@ genes_expressed = {
 
 ```
 
-In general, I use lists. I use sets occasionally, for example, to hold a list of genes that I need to filter out of  a dataset (I don't care about order here, don't want duplicates, and won't really be changing it).
+In general, I use lists. I use sets occasionally, for example, to hold a list of genes that I need to filter out of a dataset (I don't care about order here, don't want duplicates, and won't really be changing it).
 
-Dicitonaries I use relatively frequently, especially for storing data/metadata - and if you have a dictionary of lists, it is easy to convert it to a pandas dataframe.
+Dictionaries I use relatively frequently, especially for storing data/metadata - and if you have a dictionary of lists, it is easy to convert it to a pandas dataframe. 
+Another usecase of a dictionary would be if you have a list of mouse genes and their associated human genes, it will allow for easy humanisation of the genes.
 
 
 ### Indexing and Slicing
@@ -371,8 +372,18 @@ print("every second item in the genes list:")
 expressed_genes[::2]
 
 
-if 'Gapdh' in expressed_genes:
-    print('Gapdh is an expressed gene')
+if 'Gapdh' in expressed_genes: 
+    print('Gapdh is expressed')
+else:
+    print('Gapdh is not expressed')
+
+if 'Lyve1' not in expressed_genes: 
+    print('Lyve1 is not expressed')
+elif 'Lyve1' in expressed_genes:
+    print('Lyve1 is expressed')
+else:
+    print('Lyve1 is neither expressed nor not expressed - impossible!')
+
 
 print('Get length of a variable:')
 len(expressed_genes)
@@ -390,7 +401,8 @@ expressed_genes.remove('Lyve1')
 
 ### Try Except 
 
-Sometimes you want to do an operation, but there is an expected error that might pop up - you might not want your program to exit but to catch that error and do something else - this can be achieved with `try except`. For example, if you have genes you always want to remove from a dataset of expressed genes - you might have a fixed list of genes to remove. However, in a future study, those genes may not be expressed and therefore not in the list of expressed genes -> trying to remove it will raise an error -> you can catch the error and do something else like printing a helpful message.
+Sometimes you want to do an operation, but there is an expected error that might pop up - you might not want your program to exit but to catch that error and do something else - this can be achieved with `try except`./
+For example, if you have genes you always want to remove from a dataset of expressed genes - you might have a fixed list of genes to remove. However, in a future study, those genes may not be expressed and therefore not in the list of expressed genes -> trying to remove it will raise an error -> you can catch the error and do something else like printing a helpful message.
 
 ```{python}
 
@@ -478,7 +490,7 @@ print(wt1_df.transpose().head()) # flip genes and cells
 print("\nAdding a new column:")
 wt1_df['GeneSum'] = wt1_df.sum(axis=1) # add a new column: sum of counts per gene
 print(wt1_df.head())
-wt1_df.drop(['GeneSum'], axis=1, inplace=True) # removing the new column
+wt1_df.drop(['GeneSum'], axis=1, inplace=True) # removing the new column, #inplace lets us do it directly on the df and not create a new variable.
 
 # Change data type (example: ensure all counts are integers)
 wt1_df = wt1_df.astype(int)
@@ -487,7 +499,36 @@ wt1_df = wt1_df.astype(int)
 
 ```
 
-In an AnnData object, a lot of the data is stored in pandas dataframes.
+
+```{python}
+#| eval: false
+# acessing the expression of a speficific gene in a specific cell
+wt1_df.loc['Gene0', 'Cell1'] # row name, column name
+
+# accessing the expression values of a specific cell
+wt1_df['Cell1'] # column name
+
+# acessing the expresson of a specific row
+wt1_df.loc['Gene0'] # row name
+
+# accessing multiple columns of a specific row
+wt1_df.loc['Gene0', wt1_df.columns.str.startswith('Cell')]
+
+
+# acessing a specific cell
+wt1_df.iloc[0, 1] # row index, column index
+
+# acessing a row
+wt1_df.iloc[4, :] # row index (usually you would simply do: wt1_df.iloc[4])
+
+# acessing a column
+wt1_df.iloc[:, 0] # : means whole row, column index
+
+
+```
+
+
+In an AnnData object, a lot of the data is stored in pandas dataframes (e.g. var and obs).
 
 ## Basic numerical/mathematical functions
 
@@ -568,7 +609,7 @@ The dataset will be some generated data of KO vs WT counts, with 10 genes and 10
 
 ```{python}
 #| code-fold: true
-#| cold-summary: "Reading in the dataset:"
+#| code-summary: "Reading in the dataset:"
 
 # load the datasets
 wt1 = pd.read_csv(f"{output_dir}/WT_1.csv", index_col=0)
@@ -615,10 +656,8 @@ plt.show() # show the plot
 
 ```
 
-`plt.show` is what you need to do to show the plot in a popup window. If you want to save the figure there is `plt.savefig()`.\
+`plt.show()` is what you need to do to show the plot in a popup window. If you want to save the figure there is `plt.savefig()`.\
 Other good practices are to close figures once they have been initiated using `plt.close()` or `plt.clf()`.
-
-import seaborn as sns
 
 ### seaborn (sns)
 
@@ -626,7 +665,7 @@ seaborn usually runs on long data, so we will need to melt the pandas dataframe 
 
 ```{python}
 #| code-fold: true
-#| cold-summary: "Melting the dataset:"
+#| code-summary: "Melting the dataset:"
 
 
 
@@ -689,37 +728,36 @@ plt.show()
 
 import seaborn as sns
 
-plt.figure(figsize=(6,4))
-sns.violinplot(x='group', y='expression', data=merged_df[merged_df.gene == 'Gene2'], palette='muted')
-plt.title('Gene1 Expression by Group')
+# Gene2
+g = sns.catplot(data=merged_df[merged_df.gene == 'Gene2'], x="group", y="expression",
+                kind="violin", color=".9", inner=None, height=4, aspect=1.5)
+sns.swarmplot(data=merged_df[merged_df.gene == 'Gene2'], x="group", y="expression", size=3, ax=g.ax)
+g.ax.set_title('Gene2 Expression by Group')
 plt.show()
 
-plt.figure(figsize=(6,4))
-sns.violinplot(x='group', y='expression', data=merged_df[merged_df.gene == 'Gene7'], palette='muted')
-plt.title('Gene3 Expression by Group')
+g = sns.catplot(data=merged_df[merged_df.gene == 'Gene7'], x="group", y="expression",
+                kind="violin", color=".9", inner=None, height=4, aspect=1.5)
+sns.swarmplot(data=merged_df[merged_df.gene == 'Gene7'], x="group", y="expression", size=3, ax=g.ax)
+g.ax.set_title('Gene7 Expression by Group')
 plt.show()
-
 ```
 
 
 
 ```{python}
-# Fake fold change and p-value data (for illustration)
-import numpy as np
-
-# Create fake log2 fold change and p-value data
+# creating fake log2 fold change and p-value data
 volcano_data = pd.DataFrame({
-    'gene': ['Gene0', 'Gene1', 'Gene2', 'Gene3', 'Gene4', 'Gene5', 'Gene6', 'Gene7', 'Gene8', 'Gene9'],
-    'log2FC': np.random.randn(10),  # Random fold changes
-    'pval': np.random.rand(10)  # Random p-values
+    #'gene': ['Gene0', 'Gene1', 'Gene2', 'Gene3', 'Gene4', 'Gene5', 'Gene6', 'Gene7', 'Gene8', 'Gene9'],
+    'log2FC': np.random.randn(1000),  # Random fold changes
+    'pval': np.random.rand(1000)  # Random p-values
 })
 
-# Calculate -log10(p-value)
+# calculating -log10(p-value)
 volcano_data['-log10(pval)'] = -np.log10(volcano_data['pval'])
 
 plt.figure(figsize=(6,5))
 sns.scatterplot(data=volcano_data, x='log2FC', y='-log10(pval)', color='purple')
-plt.axhline(y=1.3, color='red', linestyle='dashed')  # Threshold line for p-value = 0.05
+plt.axhline(y=1.3, color='red', linestyle='dashed')  # threshold line for p-value = 0.05
 plt.axvline(x=0, color='black', linestyle='dotted')
 plt.title('Volcano Plot (Mock Example)')
 plt.xlabel('Log2 Fold Change')
@@ -765,13 +803,12 @@ example glm, example ttest, example chisq test (maybe from the small 100 row tab
 ```{python}
 import statsmodels.api as sm
 
-# Assuming df is already created
-# Create a binary response for KO vs WT group
-merged_df['group_binary'] = merged_df['group'].apply(lambda x: 1 if x == 'KO' else 0)
 
-# Let's use Gene expression as a continuous response
-X = pd.get_dummies(merged_df['group'], drop_first=True)  # One-hot encoding for group variable
-X = sm.add_constant(X)  # Add intercept
+#merged_df['group_binary'] = merged_df['group'].apply(lambda x: 1 if x == 'KO' else 0) # converting KO/WT to binary 0/1.
+
+# for this example, we will just put gene expression as a continuous response
+X = pd.get_dummies(merged_df['group'], drop_first=True)  # one-hot encoding for group variable
+X = sm.add_constant(X)  # add intercept
 y = merged_df['expression']
 
 # Fit GLM
@@ -789,11 +826,11 @@ print(model.summary())
 ```{python}
 from scipy import stats
 
-# Assume 'df' has two conditions: 'KO' and 'WT'
+# two conditions WT vs KO, different in expression
 ko_expr = merged_df[merged_df['group'] == 'KO']['expression']
 wt_expr = merged_df[merged_df['group'] == 'WT']['expression']
 
-# Perform two-sample t-test
+# performing two-sample t-test
 t_stat, p_value = stats.ttest_ind(ko_expr, wt_expr)
 
 print(f"T-statistic: {t_stat}, P-value: {p_value}")
@@ -804,14 +841,14 @@ print(f"T-statistic: {t_stat}, P-value: {p_value}")
 ```{python}
 
 
-# Categorize gene expression into 'high' or 'low' based on median expression
+# categorising gene expression into 'high' or 'low' based on median expression
 median_expr = merged_df['expression'].median()
 merged_df['expr_category'] = merged_df['expression'].apply(lambda x: 'high' if x > median_expr else 'low')
 
-# Create a contingency table
+# creating a contingency table for chisq test
 contingency = pd.crosstab(merged_df['expr_category'], merged_df['group'])
 
-# Perform the Chi-Squared test
+# performing the Chi-Squared test
 chi2, p_val, dof, expected = stats.chi2_contingency(contingency)
 
 print(f"Chi-Squared: {chi2}, P-value: {p_val}")
@@ -822,7 +859,7 @@ print(f"Chi-Squared: {chi2}, P-value: {p_val}")
 
 ```{python}
 
-# Perform ANOVA on expression values grouped by the 'group' column
+# performing ANOVA on expression values grouped by the 'group' column
 group1 = merged_df[merged_df['group'] == 'WT']['expression']
 group2 = merged_df[merged_df['group'] == 'KO']['expression']
 
@@ -833,32 +870,29 @@ print(f"ANOVA F-statistic: {f_stat}, P-value: {p_val}")
 ```
 
 
+Running multiple test correction
+
 ```{python}
 
 import pandas as pd
 import scipy.stats as stats
 from statsmodels.stats.multitest import multipletests
 
-# Example of a dataframe 'df' with gene expression data (assuming you already have this)
-# We assume `group` is the column that has 'KO' and 'WT' labels and expression data per gene
 
-# Create a list to store p-values
+# creating a list to store p-values - we will run multiple test correction
 p_values = []
-#g='Gene0'
 
-
-# Iterate over each gene (rows of the dataframe)
+# iterating over each gene (rows of the dataframe) to get expression for KO and WT
 for g in merged_df.gene.unique():
-    # Get expression data for the gene in both KO and WT groups
+    # getting expression data for the gene in both KO and WT groups
     ko_expr = merged_df[(merged_df.gene == g) & (merged_df.group == 'KO')]['expression'].to_numpy()
     wt_expr = merged_df[(merged_df.gene == g) & (merged_df.group == 'WT')]['expression'].to_numpy()
 
-    # Perform two-sample t-test
+    # performing two-sample t-test on each gene expression data
     t_stat, p_val = stats.ttest_ind(ko_expr, wt_expr, equal_var=False)
     p_values.append(p_val)
 
-# Now apply multiple testing correction to the p-values
-# Here we use the Benjamini-Hochberg (FDR) method, you could use Bonferroni if you prefer
+# Now we will apply multiple testing correction to the p-values using Benjamini-Hochberg (FDR) method, other emthods such as Bonferroni are available
 reject, corrected_pvals, _, _ = multipletests(p_values, alpha=0.05, method='fdr_bh')
 
 # Create a dataframe to view the results
@@ -884,41 +918,48 @@ print(results)
 import time
 import multiprocessing
 
-# Function to calculate square of a number (CPU-bound task)
+
 def calculate_square(number):
+    '''
+    function to calculate square of a number (CPU-bound task)
+    '''
     return number * number
 
-# Function to run the calculation in parallel using multiple processes
+
 def parallel_square(numbers):
-    # Create a pool of worker processes
+    '''
+    function to run the calculation in parallel using multiple processes
+    '''
+    # you need to reate a pool of worker processes
     with multiprocessing.Pool(processes=multiprocessing.cpu_count()) as pool:
         result = pool.map(calculate_square, numbers)
     return result
 
-# Single-threaded version: Calculating squares sequentially
 def single_threaded_square(numbers):
+    '''
+    single-threaded version: Calculating squares sequentially
+    '''
     result = []
     for number in numbers:
         result.append(calculate_square(number))
     return result
 
 if __name__ == "__main__":
-    # Create a list of numbers
     numbers = [x for x in range(1, 10000001)]  # 10 million numbers
     
-    # Measure time for single-threaded execution
+    # measuring the time for the single-threaded execution
     start_time = time.time()
     single_result = single_threaded_square(numbers)
     single_thread_time = time.time() - start_time
     print(f"Single-threaded time: {single_thread_time:.2f} seconds")
     
-    # Measure time for parallel execution
+    # measuring the time for the parallel execution
     start_time = time.time()
     parallel_result = parallel_square(numbers)
     parallel_time = time.time() - start_time
     print(f"Parallel execution time: {parallel_time:.2f} seconds")
     
-    # Compare results to make sure they are the same
+    # comparing results to make sure they are the same
     print(f"Do the results match? {'Yes' if single_result == parallel_result else 'No'}")
 
 
@@ -966,14 +1007,13 @@ rule plot_data:
         "scripts/plot_data.R"
 
 
-
 ```
 
 run workflow with `snakemake --cores 4`
 
 ## working with anndata
 
-I will talk more about this when showing my re-do of the analyses.
+I will talk more about this the next time I present a group meeting
 
 ## typehinting and testing
 
@@ -983,6 +1023,10 @@ def normalize(x: np.ndarray) -> np.ndarray:
 
 ```
 
+Other common types:
+`int`, `float`, `list`, `tuple`, `range`, `str`, `set`, `dict`, `bool`, `NoneType`, `pd.Series`, `pd.DataFrame`, `np.ndarray`, `np.int64`, `np.float64`, `sc.AnnData`.
+
+
 Example unit testing
 ```{python}
 #| eval: false
@@ -990,28 +1034,26 @@ Example unit testing
 import unittest
 import numpy as np
 
-# Assuming normalize function is defined here
-
-class TestNormalizeFunction(unittest.TestCase):
+class TestNormaliseFunction(unittest.TestCase):
 
     def test_normalize_single_dimension(self):
         """Test normalization of a 1D array."""
         x = np.array([1, 2, 3])
         expected = np.array([0.16666667, 0.33333333, 0.5])  # sum = 6, so divide each element by 6
-        result = normalize(x)
+        result = normalise(x)
         np.testing.assert_array_almost_equal(result, expected, decimal=8)
     
     def test_normalize_multiple_dimension(self):
         """Test normalization of a 2D array."""
         x = np.array([[1, 2], [3, 4]])
         expected = np.array([[0.1, 0.2], [0.3, 0.4]])  # sum = 10, divide each element by 10
-        result = normalize(x)
+        result = normalise(x)
         np.testing.assert_array_almost_equal(result, expected, decimal=8)
 
     def test_normalize_edge_case(self):
         """Test normalization of an edge case (empty array)."""
         x = np.array([])
-        with self.assertRaises(ValueError):  # Expecting a ValueError if sum is 0
+        with self.assertRaises(ValueError):  # expecting a ValueError if sum is 0
             normalize(x)
 
 if __name__ == "__main__":
@@ -1024,29 +1066,16 @@ if __name__ == "__main__":
 ## how do I test all my code interactively?
 **iPython**
 
-iPython allows you to interactively - few poitns on why its useful.
+iPython allows you to interactively code, so you can test your code in your terminal.
 
 
-## 🧵 R vs Python: Limitations
+## 🧵 R & Python
 ::: {.incremental}
 
-- R: Dependency hell, less general-purpose
+- you can do a lot of the vectorisation programming in R using numpy and pandas
 
-- Python: Verbose, steep learning curve for plots/stats
+- Python will have a bit of a learning curve for plots/stats - some R only packages (especially scientific) may not be available.
 
 - Use both! (Snakemake helps bridge them) 
 
 :::
-
-
-## Summary
-
-Python gives you:
-
-Strong workflows (Snakemake)
-
-Flexible data handling (pandas, AnnData)
-
-Access to new tooling (ML, web, devops)
-
-Let’s use both languages — smarter, not harder 😎
