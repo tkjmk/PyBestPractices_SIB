@@ -13,10 +13,10 @@ jupyter: python3
 
 In this document, I will provide an introduction to working in Python - from setting up and environment to making packages. I will try to highlight the quirks of Python and the most useful packages! 
 
-## Setting up your environment
+## TIP 1: Work in a Python environment
+Below I will show you how to set up a Python enviornment - the first step is choosing between environment managers: `venv` and `conda`.\
 
-The first step is choosing between environment managers: `venv` and `conda`.
-These will help you work in a contained environment and will allow you to use package managers to download Python packages.
+Working in an environment will help you develop your code in a controlled setting, where you will use a package manager to install the packages that are required to run your program. How to install packages is also shown in the coding block below.
 
 ::: {.panel-tabset}
 ### venv
@@ -47,9 +47,9 @@ conda env export > environment.yml
 :::
 
 
-For me, I prefer using venv with pip - but many people like conda which was designed for data science and can do a bit more than just being a package installer and can even manage software stacks beyond Python. conda comes packaged with Anaconda or miniconda, which basically provide you with many of the packages required for scientific analyses.
+For me, I prefer using venv with pip - but many people like conda which was designed for data science and can do a bit more than just being a package installer. It can even manage software stacks beyond Python. conda comes packaged with Anaconda or miniconda, which basically provide you with many of the packages required for scientific analyses - it is typically slower than just using venv and pip sometimes to install packages.
 
-## Importing packages
+## TIP 2: How you import packages will determine how you use them in your scripts
 
 When writing your script there are a few ways to import packages into Python.\
 You can just import the package directly using `import package`, all functions will be available as `package.function()`.\
@@ -65,15 +65,14 @@ from os import getcwd # importing a specific function from a package, can be use
 import timeit
 ```
 
-## An object-oriented language
+## TIP 3: Everything in Python is an object, which has its own attributes and methods!
+
 Python is object-oriented: everything focuses around objects - everything pretty much is an object.\
 These objects have their own attributes (i.e. their characteristics) and methods (i.e. things they can do).\
 For example, for a string a method would be that you can lowercase the whole word e.g. "ACT1" to "act1" by `"ACT".lower()`.\
-An attribute a string has for example is its length for example "ACT1" has a length of 4 characters.\
+An attribute a string has for example is its length for example "ACT1" has a length of 4 characters.
 
-
-
-Two objects that are important for Python programming are functions and classes - which also exist in R. Below, I show how they are typically in formatted.
+Two objects that are important for Python programming are functions and classes - which also exist in R. Below, I show how they are typically formatted.
 
 ```{python}
 # Function
@@ -101,17 +100,23 @@ def scale_counts(expmat):
 class Cell:
     def __init__(self, id, expression, location):
         '''
+        init function is required for class, it is where you can hold all the data that needs to be input when building this object.
+        In this case it wil
         Parameters
         ----------
         id : str
             Identifier for the cell.
         expression : dict
             Dictionary of {gene_name: expression_value}.
+        location : str
+            String stating where the cell was sampled from.
         '''
+        # attributes
         self.id = id
         self.expression = expression
         self.location = location
         
+    # methods
     def get_expression(self, gene):
         '''Return the expression level of a single gene.'''
         return self.expression.get(gene, np.nan)  # returns np.nan if gene missing
@@ -129,21 +134,22 @@ class Cell:
         pass
 
 
-# Example usage
-cell1_exp = {'gene1': 2, 'gene2': 3, 'gene3': 0, 'gene4': 8}
-
+# setting up object of my custom class Cell, called mycell
+cell1_exp = {'gene1': 2, 'gene2': 3, 'gene3': 0, 'gene4': 8} # dict of expression to input under expression argument of cell.
 mycell = Cell('cell1', cell1_exp, 'brain')
-print(mycell.get_expression('gene2'))  # Should return 3
-print(mycell.location)  # Should return brain
+
+
+print(mycell.get_expression('gene2'))  # using a method of my custom class Cell - should return 3
+print(mycell.location)  # accessing an attribute of my custom class Cell - hould return brain
 
 ```
 
-You want to use classes when you need reusable, modular code - where you want to apply the same functions. This is what the scanpy authors did when building the AnnData object.
+You want to use classes when you need reusable, modular code - where you want your data to be in a specific format and you want to apply the same functions (methods) to it. This is what the scanpy authors did when building the AnnData class.
 
-In the above block, I demonstrate the use of docstrings - so that others and most importantly you, can remember what the function/class is.
+In the above block, I demonstrate the use of docstrings - so that others and most importantly you, can remember what the function/class is. I have used the 'numpy' version of docstrings, the most population option is the google format. Docstrings can be accessed by using `help(my_function_name)`
 
-## making your own package
-What is nice, is when you have a series of functions/classes you find yourself using a lot, you can easily package it and import it into other projects.
+## TIP 4: You can turn your scripts with Classes/Functions into packages easily
+What is nice, is when you have a series of functions/classes you find yourself using a lot, you can easily package it and import it into other projects of yours.
 
 Let's say I saved the above coding block in a file called "cellutils.py", I would be able to import it into my other scripts using:
 
@@ -157,7 +163,9 @@ cu.scale_counts(np.array([[1, 2], [3, 4]]))
 
 ```
 
-If you want to run your script as a command line tool, that is also possible and you can look into `argparse` to input arguments e.g.
+Note: I will not go into it here, but it is best practice to put code that runs your script (i.e. eveything that is not defining a class or function) within `if __name__ == "__main__":`. Briefly, when you call the script to run from Shell - it will run your entire script (i.e. `__name__ = "__main__"`), when importing it as a package, it will only run your functions/classes defined outside of this if statement (i.e. `__name__ != "__main__"`).
+
+If you want to run your script as a command line tool, that is also possible and you can look into the package `argparse` to clearly input arguments e.g.
 
 in the command line you could have something like:
 
@@ -192,9 +200,9 @@ if __name__ == "__main__":
 
 ```
 
-## loops and comprehensions
+## TIP 5: Use comprehensions instead of for loops if your output is a list (or set/dictionary)
 
-In Python the classic `for` and `while` loops exist to go through collection objects.
+In Python the classic `for` and `while` loops exist to go through collection objects (such as lists).
 
 Let's say we have a Python list with genes that are found expressed in a cell:
 
@@ -213,43 +221,43 @@ expressed_genes = [
 ]
 
 # if we want to get and print the first letter of each gene
-for gene in expressed_genes: # with this line we are iterating through each item in the list expressed_genes
+for gene in expressed_genes: # with this line we are iterating through each item in the list expressed_genes - in each iteration of the loop the item will be under the variable gene
   print(gene[0]) # in the for loop we are printing the first letter of the string.
 
 ```
 
+Side note: you can remove a variable in python using `del varname`.
 
-
-In python different types of objects have methods associated with them.
-In this example we have a list of strings - if we want to see what attributes and methods are available we use `dir(var)`
+In Python, as mentioned before, different object types have their own methods (and attributes) associated with them.\
+Below, we have the string `"Actb"` - if we want to see what attributes and methods are available we can use the `dir(var)` function.\
+It will print all the attributes and methods available.
 ```{python}
 dir("Actb")
-
 ```
 
-If we want to see what these methods do, we can use the `help` function.
+If we want to see what any of these do specifically, we can use the `help` function as shown below:
 
 ```{python}
-
 help("Actb".startswith)
-
-
 ```
 
-With this `startswith` method for strings, lets loop through the list of expressed genes and identify mitochondrial genes (then store them in a list).
+
+Now we know what the `startswith` method does - lets use it in a for loop to go through the list of expressed genes and identify mitochondrial genes (and store them in a list).
 
 ```{python}
 
 mtgenes = [] # initialising empty list
-for gene in expressed_genes:
-  if gene.startswith('mt-'):
-    mtgenes.append(gene)
+for gene in expressed_genes:    # looping through expressed_genes list
+  if gene.startswith('mt-'):    # if the gene starts with mt-
+    mtgenes.append(gene)            ## let's append it to the mtgenes list we intiated above.
 
+# how to print to console
 print(mtgenes)
+
 # to print a bit nicer
 print(", ".join(mtgenes))
 
-# to print even more clearly, we can use f strings
+# to print even more clearly, we can use f strings - allows us to be more verbose.
 print(f'Mitochondrial genes: {", ".join(mtgenes)}')
 print(f'There are {len(mtgenes)} mitochondrial genes in the dataset.')
 
@@ -259,6 +267,8 @@ print(f'There are {len(mtgenes)} mitochondrial genes in the dataset.')
 
 In general if you are iterating through a list, and the result of your loop is a list - you should use a **list comprehension**!
 The reason to do this is because they are more efficient and quicker to do the same analysis than a loop.
+
+Side note: there are also generator, dictionary and set comprehensions - read more about it [here](https://www.geeksforgeeks.org/comprehensions-in-python/).
 
 In this block below, I demonstrate how we can convert the loops shown above into list comprehensions.
 
@@ -301,7 +311,6 @@ print(f"List comprehension time: {list_comp_time:.4f} secs")
 
 The reason is list comprehensions essentially run the iterations at a faster level using the underhood of Python (C), whereas the loop is having to enter the list each time and append to an unknown sized list.
 
-
 ```{python}
 #| code-fold: true
 #| code-summary: "A simple  way to measure the speed of your code:"
@@ -316,9 +325,9 @@ total = t1-t0 # this will store the time it takes for you to run that code
 
 ```
 
-### Going beyond lists
+## TIP 6: Sometimes it will be better to use collection objects other than lists!
 
-Beyond `lists`, other collection objects exist `sets`, `tuples` and `dictionaries`.
+Beyond `lists`, other collection objects exist. I will briefly show you `sets`, `tuples` and `dictionaries`.
 
 ```{python}
 # Lists are denoted by []   -> ordered, changeable, can hold duplicates
@@ -336,7 +345,10 @@ gene_expression = {
     "Gapdh": 8.1,
     "Cd3e": 3.4
 }
-# these are good to store items e.g. you could have a list of genes epxressed in key cells
+
+# you will be able to access any of those variables using your key e.g. gene_expression['Actb'] will return 7.2.
+
+# dictionaries are good to store most object types e.g. you could have a list of genes epxressed in key cells
 genes_expressed = {
     "Cell1": ['gene1', 'gene2'],
     "Cell2": ['gene1', 'gene3', 'gene4'],
@@ -344,16 +356,20 @@ genes_expressed = {
 }
 
 # you can even have dictionaries of dictionaries!
+# dictionaries are really useful for storing data - you could have multiple dicts e.g. genes_mutated, gene_lengths and you can acess teh data for a particular sample with the same key e.g. genes_mutated['sample1'] or gene_lengths['sample1'].
 
 ```
 
 In general, I use lists. I use sets occasionally, for example, to hold a list of genes that I need to filter out of a dataset (I don't care about order here, don't want duplicates, and won't really be changing it).
 
-Dictionaries I use relatively frequently, especially for storing data/metadata - and if you have a dictionary of lists, it is easy to convert it to a pandas dataframe. 
-Another usecase of a dictionary would be if you have a list of mouse genes and their associated human genes, it will allow for easy humanisation of the genes.
+Dictionaries I use relatively frequently, especially for storing data/metadata - and if you have a dictionary of (equally sized) lists, it is easy to convert it to a pandas dataframe (which I will go into data layer).
+
+Another usecase of a dictionary would be if you have a list of mouse genes and their associated human genes - you will be able to easily convert a list of mouse genes to human genes using the dictionary.
 
 
 ### Indexing and Slicing
+
+Below, I show some ways to index and slice a list, for you reference.
 
 ```{python}
 
@@ -399,10 +415,10 @@ expressed_genes.remove('Lyve1')
 ```
 
 
-### Try Except 
+## TIP 7: Catch your errors using try except
 
-Sometimes you want to do an operation, but there is an expected error that might pop up - you might not want your program to exit but to catch that error and do something else - this can be achieved with `try except`./
-For example, if you have genes you always want to remove from a dataset of expressed genes - you might have a fixed list of genes to remove. However, in a future study, those genes may not be expressed and therefore not in the list of expressed genes -> trying to remove it will raise an error -> you can catch the error and do something else like printing a helpful message.
+Sometimes you want to do an operation, but there is an expected error that might pop up - normally an error will cause your program to exit - you might not want this behaviour. With errors you expect, you can catch the error and do something other than exiting - this is achieved by using `try except`./
+For example, if you have genes you always want to remove from a dataset of expressed genes - you might have a fixed list of genes to remove. However, in a future project, those genes may not be expressed and therefore not in the list of expressed genes -> trying to remove it will raise an error -> you can catch the error and do something else like printing a helpful warning message (or run a different function).
 
 ```{python}
 
@@ -416,13 +432,11 @@ for gene in genes2remove:
         print(f'{gene} not an expressed_gene, so cannot be removed')
 
 
-
-
 ```
 
 
 
-## Reading in Tables
+## TIP 8: Use pandas to read in and handle DataFrames
 
 ```{python}
 #| code-fold: true
@@ -466,14 +480,14 @@ modified_df.to_csv(f"{output_dir}/KO_2.csv")
 
 The most commonly used package to handle tables in Python is `pandas` oftened imported as `pd`.
 
-It is easy to read in a csv into pandas using:
+It is easy to read in a csv into pandas using it's built in read_csv function:
 ```{python}
 output_dir = '/Users/tkafle/Documents/PyBestPractices_SIB/data/'
 wt1_df = pd.read_csv(f"{output_dir}/WT_1.csv", index_col=0) # the table is of type: pd.DataFrame
 ```
 
 
-You can then do classic things you might want to do attirbutes methods:
+Now you have your data stored in an object of type `pd.DataFrame` - and of course there are a bunch of methods and attributes you can now access to inspect and process the dataframe. I highlight some examples below.
 
 ```{python}
 
@@ -495,13 +509,15 @@ wt1_df.drop(['GeneSum'], axis=1, inplace=True) # removing the new column, #inpla
 # Change data type (example: ensure all counts are integers)
 wt1_df = wt1_df.astype(int)
 
-# remember you can use dir(pd.DataFrame) and help()
+# remember you can use dir(pd.DataFrame) and help() to better understand the attributes/methods of this object type.
 
 ```
 
-
+Below, I briefly show ways you can access data in your `pd.DataFrame`.
 ```{python}
 #| eval: false
+
+# USING NAMES OF COLUMNS AND ROWS
 # acessing the expression of a speficific gene in a specific cell
 wt1_df.loc['Gene0', 'Cell1'] # row name, column name
 
@@ -515,7 +531,8 @@ wt1_df.loc['Gene0'] # row name
 wt1_df.loc['Gene0', wt1_df.columns.str.startswith('Cell')]
 
 
-# acessing a specific cell
+# USING INDEX VALUES OF COLUMNS AND ROWS
+# acessing a specific cell 
 wt1_df.iloc[0, 1] # row index, column index
 
 # acessing a row
@@ -530,11 +547,12 @@ wt1_df.iloc[:, 0] # : means whole row, column index
 
 In an AnnData object, a lot of the data is stored in pandas dataframes (e.g. var and obs).
 
-## Basic numerical/mathematical functions
+## TIP 9: You maye need numpy to do your classical mathematic functions
 
-You can perform basic mathematical functions in Python, not dissimilarly to R. Some advanced functions are in numpy (usually imported as np).
+You can perform basic mathematical functions in Python, not dissimilarly to R. Some advanced functions are in numpy (usually imported as np). Basic mathematical functions:
 ```{python}
 
+# Mathematical functions available directly in Python
 # addition
 _ = 5 + 4
 
@@ -592,20 +610,21 @@ print(f"{big_num:.3g}")
 
 ```
 
-Remember when printing floats:
- - `.3f` = 3 decimal places.
- - `.3g` = 3 significant figures.
+Remember when printing floats:\
+- `.3f` = 3 decimal places.
+- `.3g` = 3 significant figures.
+
+`np` is also better for doing mathematical functions across vectors and things like matrix maths.
+
+## TIP 10: Several packages exist for plotting: seaborn and matplotlib can probably do most of what you want.
+
+In general there are three popular libraries:\
+- Matplotlib (basic, customisable, but more work needed to build plots) - most similar to base R plotting
+- Seaborn (easy, beautiful defaults) - most similar to ggplot2
+- Plotly (interactive) - also exists in R!
 
 
-## Plotting
-
-In general there are three popular libraries:
-- Matplotlib (basic, customizable)
-- Seaborn (easy, beautiful defaults)
-- Plotly (interactive)
-
-
-The dataset will be some generated data of KO vs WT counts, with 10 genes and 10 cells.
+The dataset I will use is the data I generated earlier in this document - it contains 2 samples of KO and 2 samples of WT with count data from 10 genes and 10 cells.
 
 ```{python}
 #| code-fold: true
@@ -639,6 +658,8 @@ print(df.head())
 Here, I will show how to make a plot and layer using matplotlib.pyplot (plt).
 The plot will be a histogram showing the expression of genes in Cell2 for sample 1.
 
+`matplotlib.pyplot` is the underlying library that `seaborn` builds on top of. You can keep layering plots onto the same figure until you call `plt.show()`, which renders the final output. If you'd like to create multiple plots arranged in a grid, you can follow this helpful [guide](https://www.geeksforgeeks.org/plot-multiple-plots-in-matplotlib/).
+
 ```{python}
 import matplotlib.pyplot as plt
 
@@ -652,7 +673,6 @@ plt.grid(True)  # layering on grid
 plt.axvline(cell2_wt1_expression.mean(), color='red', linestyle='dashed', linewidth=2, label='Mean')  # placing vertical line to show where the mean is
 plt.legend() # plot the legend
 plt.show() # show the plot
-
 
 ```
 
@@ -698,6 +718,10 @@ merged_df = pd.concat([wt1_melted, wt2_melted, ko1_melted, ko2_melted], ignore_i
 print(merged_df.head())
 ```
 
+Seaborn is typically improted as `sns`.
+
+Here, I show an example using seaborn - just requires the long form pd.DataFrame, and you can easily plot the x and y axis based on specific columns. Here, I am plotting a violin plot using `sns.violinplot`, other plot types can be found [here](https://seaborn.pydata.org/api.html).
+
 ```{python}
 #| layout-ncol: 2
 #| fig-cap: 
@@ -707,11 +731,13 @@ print(merged_df.head())
 
 import seaborn as sns
 
+# Gene1
 plt.figure(figsize=(6,4))
 sns.violinplot(x='group', y='expression', data=merged_df[merged_df.gene == 'Gene1'], palette='muted')
 plt.title('Gene1 Expression by Group')
 plt.show()
 
+#Gene3
 plt.figure(figsize=(6,4))
 sns.violinplot(x='group', y='expression', data=merged_df[merged_df.gene == 'Gene3'], palette='muted')
 plt.title('Gene3 Expression by Group')
@@ -719,12 +745,12 @@ plt.show()
 
 ```
 
+In this example, I am layering using seaborn - plotting a swarmplot above the catplot. I store the catplot in the variable g, I then plot the swarmplot on the same axes by using `ax=g.ax`.
 ```{python}
 #| layout-ncol: 2
 #| fig-cap: 
 #|   - "Violin plot: gene 2"
 #|   - "Violin plot gene 7"
-
 
 import seaborn as sns
 
@@ -735,15 +761,20 @@ sns.swarmplot(data=merged_df[merged_df.gene == 'Gene2'], x="group", y="expressio
 g.ax.set_title('Gene2 Expression by Group')
 plt.show()
 
+# gene7
 g = sns.catplot(data=merged_df[merged_df.gene == 'Gene7'], x="group", y="expression",
                 kind="violin", color=".9", inner=None, height=4, aspect=1.5)
 sns.swarmplot(data=merged_df[merged_df.gene == 'Gene7'], x="group", y="expression", size=3, ax=g.ax)
 g.ax.set_title('Gene7 Expression by Group')
 plt.show()
+
+
+# you can access the data in the sns.FacetGrid object (variable g in my script) by calling g.data
 ```
 
 
-
+In the example below I use `sns.scatterplot` to plot a volcano plot. I generate some fake data.\
+I use seaborn for the scatter plot, and hten layer on top of it using `matplotlib.pyplot` (`plt`).
 ```{python}
 # creating fake log2 fold change and p-value data
 volcano_data = pd.DataFrame({
@@ -768,8 +799,11 @@ plt.show()
 ```
 
 
-# plotly
-Interactivity
+### plotly
+
+Plotly exists in R as well, and is good for interactivity - widget-like plots. You can hover over points and filter points by clicking on the legend. 
+
+plotly express functions are not too dissimilar to using seabron - in the example below I use `px.strip` to generate a strip plot. It requires long data format `pd.DataFrame`, and you plot simply by putting the columns you want to plot under x and y (columns group and expression, respectively). The colour of each point is based on the column cell.
 
 ```{python}
 
@@ -779,27 +813,20 @@ import plotly.express as px
 fig = px.strip(merged_df[merged_df.gene == 'Gene3'], x='group', y='expression', color='cell', stripmode='overlay', title='Gene Expression by Cell (WT vs KO)')
 fig.show()
 
-
+# fig will be a plotly.graph_objects.Figure
 ```
 
 
 
 
+## TIP 11: You can do your statistical tests in python using scipy.stats or statsmodels
+
+R is known for being able to carry out stats tests, but through packages such as statsmodels and scipy.stats, we have access to many statistical tests that you need for scientific studies.
 
 
-types of pltos i want to show, histogram, lineplot, barplot, violin plot, volcano plot, stripplot.
-when showing matplotlib i want to show how we can layer things. they will be all related to singlecell data and tumours
+I will show you some examples, there is no actually reason to run these tests - it's just to show you how they can be done.
 
-
-
-
-## statistics
-R is known for its statistical properties, but the stats module from scipy brings alot of that functionality over.
-
-example glm, example ttest, example chisq test (maybe from the small 100 row table just imported above)
-
-
-
+### GLM
 ```{python}
 import statsmodels.api as sm
 
@@ -822,7 +849,7 @@ print(model.summary())
 ```
 
 
-
+### T-test
 ```{python}
 from scipy import stats
 
@@ -838,6 +865,7 @@ print(f"T-statistic: {t_stat}, P-value: {p_value}")
 
 ```
 
+### Chi2 test
 ```{python}
 
 
@@ -856,7 +884,7 @@ print(f"Chi-Squared: {chi2}, P-value: {p_val}")
 
 ```
 
-
+### ANOVA
 ```{python}
 
 # performing ANOVA on expression values grouped by the 'group' column
@@ -870,8 +898,7 @@ print(f"ANOVA F-statistic: {f_stat}, P-value: {p_val}")
 ```
 
 
-Running multiple test correction
-
+### Running correction on multiple testing
 ```{python}
 
 import pandas as pd
@@ -906,13 +933,11 @@ results = pd.DataFrame({
 print(results)
 
 
-
-
 ```
 
 
 
-## parallelism
+## TIP 12: You can parallelise your code using multiprocessing
 
 ```{python}
 import time
@@ -930,8 +955,8 @@ def parallel_square(numbers):
     '''
     function to run the calculation in parallel using multiple processes
     '''
-    # you need to reate a pool of worker processes
-    with multiprocessing.Pool(processes=multiprocessing.cpu_count()) as pool:
+    # you need to create a pool of worker processes
+    with multiprocessing.Pool(processes=multiprocessing.cpu_count()) as pool: # line that lets you access your cpus to run script
         result = pool.map(calculate_square, numbers)
     return result
 
@@ -967,7 +992,7 @@ if __name__ == "__main__":
 
 ```
 
-## Snakemake
+## TIP 13: You can generate pipelines using bash/python/r with Snakemake
 
 show basic snakemake document with three rules: cellranger [bash], preprocessing [python], plotting [r]
 
@@ -1011,14 +1036,13 @@ rule plot_data:
 
 run workflow with `snakemake --cores 4`
 
-## working with anndata
 
-I will talk more about this the next time I present a group meeting
 
-## typehinting and testing
+## TIP 14: Use type hinting to write clearly usable functions and unit testing to ensure your programmes work as expected.
 
+In the example below, it shows the function normalise requires the argument `x` and this should be of type `np.ndarray`, and the `-> np.ndarray`, shows the expected output should be of type `np.ndarray` - helping you or someone else know what to expect from this function.
 ```{python}
-def normalize(x: np.ndarray) -> np.ndarray:
+def normalise(x: np.ndarray) -> np.ndarray:
     return x / x.sum()
 
 ```
@@ -1027,7 +1051,7 @@ Other common types:
 `int`, `float`, `list`, `tuple`, `range`, `str`, `set`, `dict`, `bool`, `NoneType`, `pd.Series`, `pd.DataFrame`, `np.ndarray`, `np.int64`, `np.float64`, `sc.AnnData`.
 
 
-Example unit testing
+Unit testing is a crucial practice, especially when your code is intended for use by others or will be reused in the future. It involves writing small tests that check whether individual functions behave as expected given specific inputs. These tests help catch bugs early, document expected behavior, and ensure that future changes don’t break existing functionality. Implementing unit tests improves code reliability and maintainability. You can use `unittest` or `pytest` for this.
 ```{python}
 #| eval: false
 
@@ -1063,14 +1087,12 @@ if __name__ == "__main__":
 
 
 
-## how do I test all my code interactively?
-**iPython**
+## TIP 15: Use iPython when writing your code to more easily test it and debug it.
 
-iPython allows you to interactively code, so you can test your code in your terminal.
+**iPython**  allows you to interactively code, so you can test your code in your terminal.
 
 
-## 🧵 R & Python
-::: {.incremental}
+## R & Python together
 
 - you can do a lot of the vectorisation programming in R using numpy and pandas
 
@@ -1078,4 +1100,7 @@ iPython allows you to interactively code, so you can test your code in your term
 
 - Use both! (Snakemake helps bridge them) 
 
-:::
+
+## working with anndata
+
+In a later document, I will demonstrate how to analyse single-cell RNAseq data using Python.
