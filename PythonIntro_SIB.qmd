@@ -3,6 +3,8 @@ title: "A Gentle Introduction to Working in Python"
 subtitle: "TDS-F Group Meeting"
 format: 
   html:
+    toc: true
+    toc-expand: 2
     code-fold: false
     code-overflow: wrap
     theme: yeti
@@ -11,12 +13,12 @@ jupyter: python3
 ---
 
 
-In this document, I will provide an introduction to working in Python - from setting up and environment to making packages. I will try to highlight the quirks of Python and the most useful packages! 
+In this document, I will provide an introduction to working in Python - from setting up an environment to making packages. I will try to highlight the quirks of Python and the most useful packages! 
 
 ## TIP 1: Work in a Python environment
-Below I will show you how to set up a Python enviornment - the first step is choosing between environment managers: `venv` and `conda`.\
+Below I will show you how to set up a Python environment - the first step is choosing between environment managers: `venv` and `conda`.\
 
-Working in an environment will help you develop your code in a controlled setting, where you will use a package manager to install the packages that are required to run your program. How to install packages is also shown in the coding block below.
+Working in an environment will help you develop your code in a controlled setting. You will use a package manager to install the packages that are required to run your programme, and they will only be available within this environment. How to install packages is also shown in the coding block below. These steps must be done in shell.
 
 ::: {.panel-tabset}
 ### venv
@@ -47,7 +49,7 @@ conda env export > environment.yml
 :::
 
 
-For me, I prefer using venv with pip - but many people like conda which was designed for data science and can do a bit more than just being a package installer. It can even manage software stacks beyond Python. conda comes packaged with Anaconda or miniconda, which basically provide you with many of the packages required for scientific analyses - it is typically slower than just using venv and pip sometimes to install packages.
+For me, I prefer using venv with pip - but many people like conda which was designed for data science and [can do a bit more](https://jakevdp.github.io/blog/2016/08/25/conda-myths-and-misconceptions/) than just being a package installer. It can even manage software stacks beyond Python. conda comes packaged with Python distributions such as Anaconda or miniconda, which basically provide you with many of the packages required for scientific analyses - it is typically slower than just using venv and pip to install packages.
 
 ## TIP 2: How you import packages will determine how you use them in your scripts
 
@@ -65,14 +67,23 @@ from os import getcwd # importing a specific function from a package, can be use
 import timeit
 ```
 
-## TIP 3: Everything in Python is an object, which has its own attributes and methods!
+## TIP 3: Everything in Python is an object - each type has its own attributes and methods!
 
-Python is object-oriented: everything focuses around objects - everything pretty much is an object.\
-These objects have their own attributes (i.e. their characteristics) and methods (i.e. things they can do).\
-For example, for a string a method would be that you can lowercase the whole word e.g. "ACT1" to "act1" by `"ACT".lower()`.\
-An attribute a string has for example is its length for example "ACT1" has a length of 4 characters.
+Python is an object-oriented language: everything in Python is an object.\
+Each object belongs to a type (/class) and comes with its own attributes (describing the object) and methods (actions the object can perform).
 
-Two objects that are important for Python programming are functions and classes - which also exist in R. Below, I show how they are typically formatted.
+For example, a string like `"ACT1"` is an object of type `str`.
+It has methods, such as `.lower()`, which converts the string to lowercase:` "ACT1".lower()` returns `"act1"`.
+It also has attributes — for example, the string `"ACT1"` has a length of 4. 
+
+Methods are normally accessed like `obj.method()` and attributes by `obj.attribute` (the difference is one has `()` and the other doesn't). 
+
+::: {.callout-note}
+In Python you can't actually get the length of a string using `"ACT1".length`, and you are required to use the inbuilt function `len()` i.e. `len("ACT1")`, which will return `4`.
+:::
+
+Two essential object types in Python programming are functions and classes, both of which also exist in R.\
+They allow you to define custom behavior and create your own object types. Below, I show how they're typically defined and used.
 
 ```{python}
 # Function
@@ -101,7 +112,7 @@ class Cell:
     def __init__(self, id, expression, location):
         '''
         init function is required for class, it is where you can hold all the data that needs to be input when building this object.
-        In this case it wil
+        In this case it will take id, expression and location, and store them as attributes.
         Parameters
         ----------
         id : str
@@ -129,7 +140,7 @@ class Cell:
         '''Placeholder for a function that removes genes with zero expression.'''
         pass
 
-    def get_max_expressin(self, gene):
+    def get_max_expression(self, gene):
         '''Placeholder for a function that tells you gene(s) with highest expression.'''
         pass
 
@@ -146,7 +157,7 @@ print(mycell.location)  # accessing an attribute of my custom class Cell - hould
 
 You want to use classes when you need reusable, modular code - where you want your data to be in a specific format and you want to apply the same functions (methods) to it. This is what the scanpy authors did when building the AnnData class.
 
-In the above block, I demonstrate the use of docstrings - so that others and most importantly you, can remember what the function/class is. I have used the 'numpy' version of docstrings, the most population option is the google format. Docstrings can be accessed by using `help(my_function_name)`
+In the above block, I demonstrate the use of docstrings - so that others and most importantly you, can remember what the function/class is. I have used the 'numpy' version of docstrings, the most popular option is the google format. Docstrings can be accessed by using `help(my_function_name)`
 
 ## TIP 4: You can turn your scripts with Classes/Functions into packages easily
 What is nice, is when you have a series of functions/classes you find yourself using a lot, you can easily package it and import it into other projects of yours.
@@ -163,7 +174,7 @@ cu.scale_counts(np.array([[1, 2], [3, 4]]))
 
 ```
 
-Note: I will not go into it here, but it is best practice to put code that runs your script (i.e. eveything that is not defining a class or function) within `if __name__ == "__main__":`. Briefly, when you call the script to run from Shell - it will run your entire script (i.e. `__name__ = "__main__"`), when importing it as a package, it will only run your functions/classes defined outside of this if statement (i.e. `__name__ != "__main__"`).
+Note: I will not go into it here, but it is best practice to put code that runs your script (i.e. everything that is not defining a class or function) within `if __name__ == "__main__":`. Briefly, when you call the script to run from Shell - it will run your entire script (i.e. `__name__ = "__main__"`), when importing it as a package, it will only run your functions/classes defined outside of this if statement (i.e. `__name__ != "__main__"`).
 
 If you want to run your script as a command line tool, that is also possible and you can look into the package `argparse` to clearly input arguments e.g.
 
@@ -226,7 +237,9 @@ for gene in expressed_genes: # with this line we are iterating through each item
 
 ```
 
-Side note: you can remove a variable in python using `del varname`.
+::: {.callout-note}
+You can remove a variable in python using `del varname`.
+:::
 
 In Python, as mentioned before, different object types have their own methods (and attributes) associated with them.\
 Below, we have the string `"Actb"` - if we want to see what attributes and methods are available we can use the `dir(var)` function.\
@@ -268,7 +281,9 @@ print(f'There are {len(mtgenes)} mitochondrial genes in the dataset.')
 In general if you are iterating through a list, and the result of your loop is a list - you should use a **list comprehension**!
 The reason to do this is because they are more efficient and quicker to do the same analysis than a loop.
 
-Side note: there are also generator, dictionary and set comprehensions - read more about it [here](https://www.geeksforgeeks.org/comprehensions-in-python/).
+::: {.callout-note}
+There are also generators, dictionary and set comprehensions - read more about it [here](https://www.geeksforgeeks.org/comprehensions-in-python/).
+:::
 
 In this block below, I demonstrate how we can convert the loops shown above into list comprehensions.
 
@@ -309,7 +324,7 @@ print(f"For loop time: {loop_time:.4f} secs")
 print(f"List comprehension time: {list_comp_time:.4f} secs")
 ```
 
-The reason is list comprehensions essentially run the iterations at a faster level using the underhood of Python (C), whereas the loop is having to enter the list each time and append to an unknown sized list.
+The reason is list comprehensions essentially run the iterations at a faster and more efficient level using the underlying C implementation, whereas the loop is having to enter the list each time and append to an unknown sized list.
 
 ```{python}
 #| code-fold: true
@@ -339,7 +354,7 @@ genes = {"Actb", "Gapdh", "Cd3e"}
 
 # to look up the methods available to your data type you can use the dir(genes) or help(genes) function.
 
-# Dictionaries are kind of a named list also denoted by {}, but within the items will have keys.
+# Dictionaries are mappings of keys to values, allowing you to associate names with data. They are also denoted by {}, the items within are not just a list of items, but key: item.
 gene_expression = {
     "Actb": 7.2,
     "Gapdh": 8.1,
@@ -348,7 +363,7 @@ gene_expression = {
 
 # you will be able to access any of those variables using your key e.g. gene_expression['Actb'] will return 7.2.
 
-# dictionaries are good to store most object types e.g. you could have a list of genes epxressed in key cells
+# dictionaries are good to store most object types e.g. you could have a list of genes expressed in key cells
 genes_expressed = {
     "Cell1": ['gene1', 'gene2'],
     "Cell2": ['gene1', 'gene3', 'gene4'],
@@ -356,7 +371,9 @@ genes_expressed = {
 }
 
 # you can even have dictionaries of dictionaries!
-# dictionaries are really useful for storing data - you could have multiple dicts e.g. genes_mutated, gene_lengths and you can acess teh data for a particular sample with the same key e.g. genes_mutated['sample1'] or gene_lengths['sample1'].
+# dictionaries are really useful for storing data - you could have multiple dicts e.g. genes_mutated, gene_lengths and you can access the data for a particular sample with the same key e.g. genes_mutated['sample1'] or gene_lengths['sample1'].
+
+# Side note: {} will intialise an enpty dictionary ([] for list and () for tuples). To intialise an empty set, you must use set().
 
 ```
 
@@ -369,13 +386,13 @@ Another usecase of a dictionary would be if you have a list of mouse genes and t
 
 ### Indexing and Slicing
 
-Below, I show some ways to index and slice a list, for you reference.
+Below, I show some ways to index and slice a list, for your reference.
 
 ```{python}
 
 expressed_genes = ['Actb','Gapdh', 'Cd3e', 'Pax6', 'Foxp3', 'Tubb3', 'mt-Co1', 'mt-Nd2', 'mt-Cytb', 'Il2ra']
 
-print("first item of genes list:") #Python is 0-indexed!
+print("first item of genes list:") # Python is zero-indexed (i.e., indexing starts at 0)!
 expressed_genes[0]
 
 print("items 1 to 3 of genes list:")
@@ -405,7 +422,7 @@ print('Get length of a variable:')
 len(expressed_genes)
 
 # methods available for lists:
-expressed_genes.sort()
+expressed_genes.sort() # it sorts in place, so no need to put it inot a new variable.
 
 expressed_genes.append('Lyve1') # genes.insert(0, 'Lyve1') if you want to insert it at the beginning
 
@@ -417,7 +434,7 @@ expressed_genes.remove('Lyve1')
 
 ## TIP 7: Catch your errors using try except
 
-Sometimes you want to do an operation, but there is an expected error that might pop up - normally an error will cause your program to exit - you might not want this behaviour. With errors you expect, you can catch the error and do something other than exiting - this is achieved by using `try except`./
+Sometimes you want to do an operation, but there is an expected error that might pop up - normally an error will cause your programme to exit - you might not want this behaviour. With errors you expect, you can catch the error and do something other than exiting - this is achieved by using `try except`./
 For example, if you have genes you always want to remove from a dataset of expressed genes - you might have a fixed list of genes to remove. However, in a future project, those genes may not be expressed and therefore not in the list of expressed genes -> trying to remove it will raise an error -> you can catch the error and do something else like printing a helpful warning message (or run a different function).
 
 ```{python}
@@ -468,12 +485,12 @@ os.makedirs(output_dir, exist_ok=True)
 df.to_csv(f"{output_dir}/WT_1.csv")
 random_changes = np.random.randint(-50, 51, size=df.shape)
 modified_df = df + random_changes
-modified_df = modified_df.where(df >= 0, 0)
+modified_df = modified_df.where(df >= 0, 0) # could alternatively use modified_df.clip(lower=0)
 modified_df.to_csv(f"{output_dir}/WT_2.csv")
 df_KO.to_csv(f"{output_dir}/KO_1.csv")
 random_changes = np.random.randint(-50, 51, size=df_KO.shape)
 modified_df = df_KO + random_changes
-modified_df = modified_df.where(modified_df >= 0, 0)
+modified_df = modified_df.where(modified_df >= 0, 0) # could alternatively use modified_df.clip(lower=0)
 modified_df.to_csv(f"{output_dir}/KO_2.csv")
 
 ```
@@ -482,7 +499,7 @@ The most commonly used package to handle tables in Python is `pandas` oftened im
 
 It is easy to read in a csv into pandas using it's built in read_csv function:
 ```{python}
-output_dir = '/Users/tkafle/Documents/PyBestPractices_SIB/data/'
+output_dir = os.path.join(os.getcwd(), 'data')
 wt1_df = pd.read_csv(f"{output_dir}/WT_1.csv", index_col=0) # the table is of type: pd.DataFrame
 ```
 
@@ -509,7 +526,7 @@ wt1_df.drop(['GeneSum'], axis=1, inplace=True) # removing the new column, #inpla
 # Change data type (example: ensure all counts are integers)
 wt1_df = wt1_df.astype(int)
 
-# remember you can use dir(pd.DataFrame) and help() to better understand the attributes/methods of this object type.
+# remember you can use dir(pd.DataFrame) and the help() function to better understand the attributes/methods of this object type.
 
 ```
 
@@ -518,13 +535,13 @@ Below, I briefly show ways you can access data in your `pd.DataFrame`.
 #| eval: false
 
 # USING NAMES OF COLUMNS AND ROWS
-# acessing the expression of a speficific gene in a specific cell
+# accessing the expression of a speficific gene in a specific cell
 wt1_df.loc['Gene0', 'Cell1'] # row name, column name
 
 # accessing the expression values of a specific cell
 wt1_df['Cell1'] # column name
 
-# acessing the expresson of a specific row
+# accessing the expression of a specific row
 wt1_df.loc['Gene0'] # row name
 
 # accessing multiple columns of a specific row
@@ -532,13 +549,13 @@ wt1_df.loc['Gene0', wt1_df.columns.str.startswith('Cell')]
 
 
 # USING INDEX VALUES OF COLUMNS AND ROWS
-# acessing a specific cell 
+# accessing a specific cell 
 wt1_df.iloc[0, 1] # row index, column index
 
-# acessing a row
+# accessing a row
 wt1_df.iloc[4, :] # row index (usually you would simply do: wt1_df.iloc[4])
 
-# acessing a column
+# accessing a column
 wt1_df.iloc[:, 0] # : means whole row, column index
 
 
@@ -547,7 +564,7 @@ wt1_df.iloc[:, 0] # : means whole row, column index
 
 In an AnnData object, a lot of the data is stored in pandas dataframes (e.g. var and obs).
 
-## TIP 9: You maye need numpy to do your classical mathematic functions
+## TIP 9: Use NumPy for advanced mathematical functions
 
 You can perform basic mathematical functions in Python, not dissimilarly to R. Some advanced functions are in numpy (usually imported as np). Basic mathematical functions:
 ```{python}
@@ -718,7 +735,7 @@ merged_df = pd.concat([wt1_melted, wt2_melted, ko1_melted, ko2_melted], ignore_i
 print(merged_df.head())
 ```
 
-Seaborn is typically improted as `sns`.
+Seaborn is typically imported as `sns`.
 
 Here, I show an example using seaborn - just requires the long form pd.DataFrame, and you can easily plot the x and y axis based on specific columns. Here, I am plotting a violin plot using `sns.violinplot`, other plot types can be found [here](https://seaborn.pydata.org/api.html).
 
@@ -774,7 +791,7 @@ plt.show()
 
 
 In the example below I use `sns.scatterplot` to plot a volcano plot. I generate some fake data.\
-I use seaborn for the scatter plot, and hten layer on top of it using `matplotlib.pyplot` (`plt`).
+I use seaborn for the scatter plot, and then layer on top of it using `matplotlib.pyplot` (`plt`).
 ```{python}
 # creating fake log2 fold change and p-value data
 volcano_data = pd.DataFrame({
@@ -813,7 +830,7 @@ import plotly.express as px
 fig = px.strip(merged_df[merged_df.gene == 'Gene3'], x='group', y='expression', color='cell', stripmode='overlay', title='Gene Expression by Cell (WT vs KO)')
 fig.show()
 
-# fig will be a plotly.graph_objects.Figure
+# the variable fig is a plotly.graph_objects.Figure
 ```
 
 
@@ -824,7 +841,7 @@ fig.show()
 R is known for being able to carry out stats tests, but through packages such as statsmodels and scipy.stats, we have access to many statistical tests that you need for scientific studies.
 
 
-I will show you some examples, there is no actually reason to run these tests - it's just to show you how they can be done.
+I will show you some examples, these tests are shown only for demonstration; there's no real hypothesis being tested.
 
 ### GLM
 ```{python}
@@ -919,7 +936,7 @@ for g in merged_df.gene.unique():
     t_stat, p_val = stats.ttest_ind(ko_expr, wt_expr, equal_var=False)
     p_values.append(p_val)
 
-# Now we will apply multiple testing correction to the p-values using Benjamini-Hochberg (FDR) method, other emthods such as Bonferroni are available
+# Now we will apply multiple testing correction to the p-values using Benjamini-Hochberg (FDR) method, other methods such as Bonferroni are available
 reject, corrected_pvals, _, _ = multipletests(p_values, alpha=0.05, method='fdr_bh')
 
 # Create a dataframe to view the results
@@ -996,7 +1013,7 @@ if __name__ == "__main__":
 
 show basic snakemake document with three rules: cellranger [bash], preprocessing [python], plotting [r]
 
-```{Snakefile}
+```{.Snakefile}
 
 # Snakefile
 
@@ -1034,7 +1051,7 @@ rule plot_data:
 
 ```
 
-run workflow with `snakemake --cores 4`
+run workflow with `snakemake --cores 4 -s Snakefile` 
 
 
 
@@ -1060,25 +1077,25 @@ import numpy as np
 
 class TestNormaliseFunction(unittest.TestCase):
 
-    def test_normalize_single_dimension(self):
+    def test_normalise_single_dimension(self):
         """Test normalization of a 1D array."""
         x = np.array([1, 2, 3])
         expected = np.array([0.16666667, 0.33333333, 0.5])  # sum = 6, so divide each element by 6
         result = normalise(x)
         np.testing.assert_array_almost_equal(result, expected, decimal=8)
     
-    def test_normalize_multiple_dimension(self):
+    def test_normalise_multiple_dimension(self):
         """Test normalization of a 2D array."""
         x = np.array([[1, 2], [3, 4]])
         expected = np.array([[0.1, 0.2], [0.3, 0.4]])  # sum = 10, divide each element by 10
         result = normalise(x)
         np.testing.assert_array_almost_equal(result, expected, decimal=8)
 
-    def test_normalize_edge_case(self):
+    def test_normalise_edge_case(self):
         """Test normalization of an edge case (empty array)."""
         x = np.array([])
         with self.assertRaises(ValueError):  # expecting a ValueError if sum is 0
-            normalize(x)
+            normalise(x)
 
 if __name__ == "__main__":
     unittest.main()
@@ -1087,9 +1104,9 @@ if __name__ == "__main__":
 
 
 
-## TIP 15: Use iPython when writing your code to more easily test it and debug it.
+## TIP 15: Use IPython when writing your code to more easily test it and debug it.
 
-**iPython**  allows you to interactively code, so you can test your code in your terminal.
+**IPython**  allows you to interactively code, so you can test your code in your terminal.
 
 
 ## R & Python together
@@ -1101,6 +1118,6 @@ if __name__ == "__main__":
 - Use both! (Snakemake helps bridge them) 
 
 
-## working with anndata
+## Working with anndata
 
 In a later document, I will demonstrate how to analyse single-cell RNAseq data using Python.
