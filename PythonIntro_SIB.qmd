@@ -4,7 +4,8 @@ subtitle: "TDS-F Group Meeting"
 format: 
   html:
     toc: true
-    toc-expand: 2
+    toc-expand: 1
+    toc-title: Python Tips!
     code-fold: false
     code-overflow: wrap
     theme: yeti
