@@ -11,6 +11,9 @@ format:
     theme: yeti
     smooth-scroll: true
 jupyter: python3
+author: 
+    - name: "Tane Kafle"
+    - email: "tanuj-kafle@hotmail.co.uk"
 ---
 
 <!--
@@ -655,7 +658,8 @@ print(f"{big_num:.3g}")
 
 ```
 
-Remember when printing floats:\
+Remember when printing floats:
+
 - `.3f` = 3 decimal places.
 - `.3g` = 3 significant figures.
 
@@ -663,7 +667,8 @@ Remember when printing floats:\
 
 ## TIP 10: Several packages exist for plotting: seaborn and matplotlib can probably do most of what you want.
 
-In general there are three popular libraries:\
+In general there are three popular libraries:
+
 - Matplotlib (basic, customisable, but more work needed to build plots) - most similar to base R plotting
 - Seaborn (easy, beautiful defaults) - most similar to ggplot2
 - Plotly (interactive) - also exists in R!
