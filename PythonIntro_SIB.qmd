@@ -1113,13 +1113,13 @@ if __name__ == "__main__":
 
 ## R & Python together
 
-- you can do a lot of the vectorisation programming in R using numpy and pandas
+- In Python you can do a lot of the vectorisation programming you do in R using numpy and pandas.
 
 - Python will have a bit of a learning curve for plots/stats - some R only packages (especially scientific) may not be available.
 
-- Use both! (Snakemake helps bridge them) 
+- Use both! (Snakemake helps bridge them when building pipelines) 
 
 
-## Working with anndata
+## Working with AnnData objects
 
 In a later document, I will demonstrate how to analyse single-cell RNAseq data using Python.
