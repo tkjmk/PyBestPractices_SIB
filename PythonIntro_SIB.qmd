@@ -12,7 +12,7 @@ format:
 jupyter: python3
 ---
 
-
+    
 In this document, I will provide an introduction to working in Python - from setting up an environment to making packages. I will try to highlight the quirks of Python and the most useful packages! 
 
 ## TIP 1: Work in a Python environment
@@ -499,6 +499,7 @@ The most commonly used package to handle tables in Python is `pandas` oftened im
 
 It is easy to read in a csv into pandas using it's built in read_csv function:
 ```{python}
+import os
 output_dir = os.path.join(os.getcwd(), 'data')
 wt1_df = pd.read_csv(f"{output_dir}/WT_1.csv", index_col=0) # the table is of type: pd.DataFrame
 ```
