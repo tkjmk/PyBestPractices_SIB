@@ -1,4 +1,4 @@
 *.DS_Store
 __*
-
+PythonIntro_SIB_files/figure-pdf/*
 /.quarto/

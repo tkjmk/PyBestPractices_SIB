@@ -13,8 +13,34 @@ format:
 jupyter: python3
 ---
 
-    
-In this document, I will provide an introduction to working in Python - from setting up an environment to making packages. I will try to highlight the quirks of Python and the most useful packages! 
+<!--
+format: 
+  html:
+    toc: true
+    toc-expand: 1
+    toc-title: Python Tips!
+    code-fold: false
+    code-overflow: wrap
+    theme: yeti
+    smooth-scroll: true
+-->
+
+<!--
+format: 
+  pdf:
+    toc: true
+    number-sections: true
+    colorlinks: true
+    code-overflow: wrap
+    keep-tex: true
+    include-in-header: 
+       text: |
+         \usepackage{fvextra}
+         \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
+         \DefineVerbatimEnvironment{OutputCode}{Verbatim}{breaklines,commandchars=\\\{\}}
+--->
+
+In this [document](https://tkjmk.github.io/PyBestPractices_SIB/PythonIntro_SIB.html), I will provide an introduction to working in Python - from setting up an environment to making packages. I will try to highlight the quirks of Python and the most useful packages! 
 
 ## TIP 1: Work in a Python environment
 Below I will show you how to set up a Python environment - the first step is choosing between environment managers: `venv` and `conda`.\
@@ -1015,7 +1041,8 @@ if __name__ == "__main__":
 
 show basic snakemake document with three rules: cellranger [bash], preprocessing [python], plotting [r]
 
-```{.Snakefile}
+```{python}
+#| eval: false
 
 # Snakefile
 
