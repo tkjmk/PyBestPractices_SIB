@@ -41,6 +41,8 @@ format:
          \usepackage{fvextra}
          \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
          \DefineVerbatimEnvironment{OutputCode}{Verbatim}{breaklines,commandchars=\\\{\}}
+
+change _quarto.yml to `output-dir: pdfversion` from `output-dir: docs`.
 --->
 
 In this [document](https://tkjmk.github.io/PyBestPractices_SIB/PythonIntro_SIB.html), I will provide an introduction to working in Python - from setting up an environment to making packages. I will try to highlight the quirks of Python and the most useful packages! 
@@ -204,7 +206,9 @@ cu.scale_counts(np.array([[1, 2], [3, 4]]))
 
 ```
 
-Note: I will not go into it here, but it is best practice to put code that runs your script (i.e. everything that is not defining a class or function) within `if __name__ == "__main__":`. Briefly, when you call the script to run from Shell - it will run your entire script (i.e. `__name__ = "__main__"`), when importing it as a package, it will only run your functions/classes defined outside of this if statement (i.e. `__name__ != "__main__"`).
+::: {.callout-note}
+I will not go into it in too much detail here, but it is best practice to put code that runs your script (i.e. everything that is not defining a class or function) within `if __name__ == "__main__":`. Briefly, when you call the script to run from Shell - it will run your entire script (i.e. `__name__ = "__main__"`), when importing it as a package, it will only run your functions/classes defined outside of this if statement (i.e. `__name__ != "__main__"`).
+:::
 
 If you want to run your script as a command line tool, that is also possible and you can look into the package `argparse` to clearly input arguments e.g.
 
@@ -1155,3 +1159,5 @@ if __name__ == "__main__":
 ## Working with AnnData objects
 
 In a later document, I will demonstrate how to analyse single-cell RNAseq data using Python.
+
+
