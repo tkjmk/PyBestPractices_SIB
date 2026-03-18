@@ -13,7 +13,7 @@ format:
 jupyter: python3
 author: 
     - name: "Tane Kafle"
-    - email: "tanuj-kafle@hotmail.co.uk"
+    - email: "tanuj.kafle@sib.swiss"
 ---
 
 <!--
