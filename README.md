@@ -12,5 +12,6 @@ I cover topics such as objects, loops, plots, stats, parallelisation and mention
 
 The document may be useful for best practices e.g. docstrings and the basics e.g. slicing, indexing.
 
+Access the guide at: https://bdsfacility.github.io/BestPractices_Python/
 
-Please free to contact me if you have any questions. Github: tkjmk.
+Please free to contact me (Github: tkjmk) if you have any questions.
